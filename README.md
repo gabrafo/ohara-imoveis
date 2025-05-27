@@ -32,6 +32,7 @@ A organização do projeto foi definida para promover clareza e modularidade, se
     * **`/testes`**: Incluirá os planos e evidências dos testes de validação, tais como:
         * Documentos com a especificação dos Casos de Teste de Validação (caixa-preta/funcionais).
         * Scripts de testes automatizados para validação (ex: Selenium).
+   * **`/padroes-adotados`**: Incluirá a especificação das características que devem ser obedecidas ao descrever os requisitos do projeto.
 
 Outras pastas podem ser adicionadas conforme a necessidade e serão documentadas nesta seção. Além disso, tanto `/api`, quanto `/web`, contarão com arquivos `docker-compose.yml` e `Dockerfile` próprios, que serão essenciais para a execução do sistema.
 
