@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { Role } from '../../shared/enums/role.enum'; 
 
 @Entity()
 export class User {
@@ -21,10 +22,15 @@ export class User {
   @Column()
   phone: string;
 
+  @Column({
+    type: 'enum',
+    enum: Role,
+    default: Role.CUSTOMER,
+  })
+  role: Role;
 
   @BeforeInsert()
   async hashPassword() {
-    // Gera um "sal" e cria o hash da senha
     this.password = await bcrypt.hash(this.password, 10);
   }
 }
