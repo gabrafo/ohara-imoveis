@@ -4,7 +4,6 @@ import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import { Logger } from '@nestjs/common';
-import * as cors from 'cors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -31,8 +30,10 @@ async function bootstrap() {
   });
 
   app.use((req, res, next) => {
+    const start = Date.now();
     res.on('finish', () => {
-      logger.log(`${req.method} ${req.originalUrl} ${res.statusCode}`);
+      const duration = Date.now() - start;
+      logger.log(`${req.method} ${req.originalUrl} ${res.statusCode} - ${duration}ms`);
     });
     next();
   });
