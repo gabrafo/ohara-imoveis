@@ -1,19 +1,15 @@
-import { IsNotEmpty, IsString, IsStrongPassword, Length, Matches } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsStrongPassword, Length, Matches } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginRequestDto {
 
     @ApiProperty({
-        example: 'gabrafo',
-        description: 'Nome de usuário no sistema'
+        description: 'Endereço de e-mail único do usuário, que será usado para login.',
+        example: 'gabriel.fagundes@email.com',
     })
-    @IsNotEmpty()
-    @IsString()
-    @Length(3, 20)
-    @Matches(/^[a-zA-Z0-9_.]+$/, {
-      message: 'Username can only contain letters, numbers, underscores and periods',
-    })
-    username: string;
+    @IsEmail({}, { message: 'O e-mail fornecido não é válido.' })
+    @IsNotEmpty({ message: 'O e-mail não pode estar vazio.' })
+    email: string;
 
     @ApiProperty({
         example: 'StrongP@ssword123',

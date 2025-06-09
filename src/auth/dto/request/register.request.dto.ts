@@ -3,7 +3,7 @@ import {
   IsString,
   IsEmail,
   IsNotEmpty,
-  MinLength,
+  IsStrongPassword,
   IsDateString,
   IsPhoneNumber, // Validador robusto para números de telefone
 } from 'class-validator';
@@ -15,7 +15,7 @@ import {
 export class RegisterRequestDto {
   @ApiProperty({
     description: 'Nome completo do usuário.',
-    example: 'Gabriel Afonso',
+    example: 'Gabriel Fagundes',
   })
   @IsString({ message: 'O nome deve ser um texto.' })
   @IsNotEmpty({ message: 'O nome não pode estar vazio.' })
@@ -31,20 +31,18 @@ export class RegisterRequestDto {
 
   @ApiProperty({
     description: 'Endereço de e-mail único do usuário, que será usado para login.',
-    example: 'gabriel.afonso@email.com',
+    example: 'gabriel.fagundes@email.com',
   })
   @IsEmail({}, { message: 'O e-mail fornecido não é válido.' })
   @IsNotEmpty({ message: 'O e-mail não pode estar vazio.' })
   email: string;
 
   @ApiProperty({
-    description: 'Senha do usuário. Deve conter no mínimo 6 caracteres.',
-    example: 'senhaForte123',
-    minLength: 6,
+    example: 'StrongP@ssword123',
+    description: 'Senha do usuário no sistema'
   })
-  @IsString({ message: 'A senha deve ser um texto.' })
-  @MinLength(6, { message: 'A senha precisa ter no mínimo 6 caracteres.' })
-  @IsNotEmpty({ message: 'A senha não pode estar vazia.' })
+  @IsString()
+  @IsStrongPassword()
   password: string;
 
   @ApiProperty({
