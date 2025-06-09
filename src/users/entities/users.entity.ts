@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Entity()
 export class User {
@@ -20,11 +21,10 @@ export class User {
   @Column()
   phone: string;
 
-  // Este método será chamado automaticamente pelo TypeORM ANTES de um novo
-  // usuário ser inserido no banco de dados.
-  /* @BeforeInsert()
+
+  @BeforeInsert()
   async hashPassword() {
     // Gera um "sal" e cria o hash da senha
     this.password = await bcrypt.hash(this.password, 10);
-  } */
+  }
 }
