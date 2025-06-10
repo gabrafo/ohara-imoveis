@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Role } from '../../shared/enums/role.enum'; 
+import { Role } from '../../common/enums/role.enum'; 
 
 @Entity()
 export class User {
@@ -10,7 +10,7 @@ export class User {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ type: 'date' })
   birthDate: Date;
 
   @Column({ unique: true })
@@ -32,5 +32,15 @@ export class User {
   @BeforeInsert()
   async hashPassword() {
     this.password = await bcrypt.hash(this.password, 10);
+  }
+
+  @BeforeInsert()
+  @BeforeUpdate()
+  parseBirthDate() {
+    if (typeof this.birthDate === 'string') {
+      const birthDateStr = this.birthDate as string;
+      const [day, month, year] = birthDateStr.split('-');
+      this.birthDate = new Date(`${year}-${month}-${day}`);
+    }
   }
 }

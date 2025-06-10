@@ -4,14 +4,13 @@ import {
   IsEmail,
   IsNotEmpty,
   IsStrongPassword,
-  IsDateString,
-  IsPhoneNumber, // Validador robusto para números de telefone
+  Validate,
+  IsPhoneNumber,
+  Matches,
 } from 'class-validator';
+import { IsAdult } from '../../../common/validators/is-adult.validator';
 
-/**
- * Define a estrutura de dados esperada no corpo da requisição
- * para o endpoint de registro de um novo usuário.
- */
+
 export class RegisterRequestDto {
   @ApiProperty({
     description: 'Nome completo do usuário.',
@@ -22,12 +21,15 @@ export class RegisterRequestDto {
   name: string;
 
   @ApiProperty({
-    description: 'Data de nascimento do usuário no formato YYYY-MM-DD.',
-    example: '1990-01-25',
+    description: 'Data de nascimento do usuário no formato DD-MM-YYYY. O usuário deve ser maior que dezoito anos.',
+    example: '04-12-2010',
   })
-  @IsDateString({}, { message: 'A data de nascimento deve estar no formato YYYY-MM-DD.' })
   @IsNotEmpty({ message: 'A data de nascimento não pode estar vazia.' })
-  birthDate: Date;
+  @Matches(/^\d{2}-\d{2}-\d{4}$/, {
+  message: 'A data de nascimento deve estar no formato DD-MM-YYYY.',
+  })
+  @Validate(IsAdult, { message: 'O usuário deve ser maior de 18 anos.' })
+  birthDate: string;
 
   @ApiProperty({
     description: 'Endereço de e-mail único do usuário, que será usado para login.',
