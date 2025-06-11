@@ -12,7 +12,6 @@ const RegisterScreen: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault(); // Previne o recarregamento da página
 
-    // Aqui você faria a lógica de registro, como enviar para uma API
     console.log({
       name,
       email,
