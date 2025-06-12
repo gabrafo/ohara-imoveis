@@ -64,8 +64,8 @@ async function bootstrap() {
       .build();
 
     const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api', app, document);
-    logger.log(`Documentação Swagger disponível em /api`);
+    SwaggerModule.setup('docs', app, document);
+    logger.log(`Documentação Swagger disponível em /docs`);
   }
   
   // --- INICIALIZAÇÃO ---

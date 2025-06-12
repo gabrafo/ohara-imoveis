@@ -61,7 +61,7 @@ Para rodar a API localmente, juntamente com o seu banco de dados PostgreSQL, é 
    * O comando up irá iniciar todos os serviços definidos no docker-compose.yml (a aplicação e a base de dados).  
    * A flag \--build força a reconstrução da imagem Docker da sua aplicação, garantindo que quaisquer alterações no código sejam aplicadas.  
 4. Após a inicialização, a API estará disponível em http://localhost:8000 (ou na porta que você definiu no seu .env).  
-5. A documentação interativa da API (Swagger) estará disponível em http://localhost:8000/api.
+5. A documentação interativa da API (Swagger) estará disponível em http://localhost:8000/docs.
 
 ## **5\. Executando a Análise de Qualidade com SonarQube**
 
