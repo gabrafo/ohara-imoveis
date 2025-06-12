@@ -1,6 +1,0 @@
-projectKey=ohara-imoveis
-serverUrl=http://localhost:9000
-serverVersion=25.6.0.109173
-dashboardUrl=http://localhost:9000/dashboard?id=ohara-imoveis
-ceTaskId=fc6c59e5-7590-4352-9fc0-5673801ec1af
-ceTaskUrl=http://localhost:9000/api/ce/task?id=fc6c59e5-7590-4352-9fc0-5673801ec1af
