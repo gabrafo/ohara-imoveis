@@ -16,10 +16,10 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ select: false })
   password: string;
 
-  @Column()
+  @Column({ unique: true })
   phone: string;
 
   @Column({
@@ -29,9 +29,17 @@ export class User {
   })
   role: Role;
 
+  @Column({ type: 'int', default: 1, select: false })
+  tokenVersion: number;
+
   @BeforeInsert()
+  @BeforeUpdate()
   async hashPassword() {
-    this.password = await bcrypt.hash(this.password, 10);
+    // Regex para verificar se a string já é um hash bcrypt válido (começa com $2a$, $2b$ ou $2y$).
+    const isBcryptHash = /^\$2[aby]\$\d{2}\$/.test(this.password || '');
+    if (this.password && !isBcryptHash) {
+      this.password = bcrypt.hashSync(this.password, 10);
+    }
   }
 
   @BeforeInsert()

@@ -22,7 +22,7 @@ export class RegisterRequestDto {
 
   @ApiProperty({
     description: 'Data de nascimento do usuário no formato DD-MM-YYYY. O usuário deve ser maior que dezoito anos.',
-    example: '04-12-2010',
+    example: '04-04-2005',
   })
   @IsNotEmpty({ message: 'A data de nascimento não pode estar vazia.' })
   @Matches(/^\d{2}-\d{2}-\d{4}$/, {

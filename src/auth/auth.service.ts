@@ -1,85 +1,96 @@
-import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Inject, Injectable, Logger, OnModuleInit, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/users.entity';
-import { Repository } from 'typeorm';
-import { LoginRequestDto } from './dto/request/login.request.dto';
+
 import { RegisterRequestDto } from './dto/request/register.request.dto';
-import { LoginResponseDto } from './dto/response/login.response.dto';
+import { AuthResponseDto } from './dto/response/auth.response.dto';
 import * as bcrypt from 'bcrypt';
+import { UsersService } from 'src/users/users.service';
+import { ConfigService } from '@nestjs/config';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
+    private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>
+    private readonly configService: ConfigService
   ) {}
 
-  async createToken(user: User) {
-    return this.jwtService.sign({
-        role: user.role
-      }, {
-        secret: process.env.SECRET_KEY,
-        expiresIn: '1h',
-        subject: String(user.userId),
-        issuer: 'ohara-imoveis',
-        audience: 'users'
-      });
-  }
-
-  async checkToken() {
-
-  }
-
-  async login(dto: LoginRequestDto) {
-    const user = await this.userRepository.findOne({
-      where: { email: dto.email }
-    });
-
+  async validateUser(email: string, pass: string): Promise<Omit<User, 'password'>> {
+    const user = await this.usersService.findByEmailWithPassword(email);
     if (!user) {
       throw new UnauthorizedException('E-mail e/ou senha inválidos.');
     }
-
-    const isPasswordMatching = await bcrypt.compare(dto.password, user.password);
-
+    const isPasswordMatching = await bcrypt.compare(pass, user.password);
     if (!isPasswordMatching) {
       throw new UnauthorizedException('E-mail e/ou senha inválidos.');
     }
-
-    return new LoginResponseDto(await this.createToken(user));
+    const { password, ...rest } = user;
+    const result: Omit<User, 'password'> = { ...rest } as Omit<User, 'password'>;
+    return result;
   }
 
-  async forgotPassword(email: string): Promise<string> {
-    const user = await this.userRepository.findOne({ where: { email } });
+  private async getTokens(user: Omit<User, 'password'>): Promise<{ accessToken: string; refreshToken: string }> {
+    const jti = randomUUID();
+    const accessTokenPayload = { sub: user.userId, role: user.role, aud: 'access', jti, version: user.tokenVersion };
+    const refreshTokenPayload = { sub: user.userId, aud: 'refresh', jti, version: user.tokenVersion };
 
-    if (!user) {
-      throw new ConflictException('Usuário não encontrado.');
-    }
+    const [accessToken, refreshToken] = await Promise.all([
+      this.jwtService.signAsync(accessTokenPayload, {
+        secret: this.configService.get<string>('JWT_ACCESS_SECRET'),
+        expiresIn: this.configService.get<string>('JWT_ACCESS_EXPIRATION_TIME'),
+      }),
+      this.jwtService.signAsync(refreshTokenPayload, {
+        secret: this.configService.get<string>('JWT_REFRESH_SECRET'),
+        expiresIn: this.configService.get<string>('JWT_REFRESH_EXPIRATION_TIME'),
+      }),
+    ]);
 
-    // TODO: Enviar e-mail com instruções de redefinição de senha
-
-    return 'E-mail de redefinição de senha enviado com sucesso.';
+    return { accessToken, refreshToken };
   }
 
-  /*async resetPassword(token: string, newPassword: string) {
-    // TODO: Verificar o token e redefinir a senha do usuário
+  async logout(userId: number): Promise<{ message: string }> {
+    await this.usersService.incrementTokenVersion(userId);
+    return { message: 'Todas as sessões foram encerradas com sucesso.' };
+  }
 
-    const user = await this.userRepository.findOne({ where: { userId: token.userId } });
-    if (!user) {
-      throw new UnauthorizedException('Token inválido ou expirado.');
-    }
-  }*/
+  async login(user: Omit<User, 'password'>): Promise<AuthResponseDto> {
+    const { accessToken, refreshToken } = await this.getTokens(user);
+    return new AuthResponseDto(accessToken, refreshToken);
+  }
 
-  async register(dto: RegisterRequestDto){
-    const existingUser = await this.userRepository.findOne({ where: { email: dto.email } });
+  async register(dto: RegisterRequestDto): Promise<AuthResponseDto> {
+    const existingUser = await this.usersService.findByEmail(dto.email);
 
     if (existingUser) {
-      throw new ConflictException(`Usuário com o e-mail "${dto.email}" já existe.`);
+      throw new ConflictException(`Utilizador com o e-mail "${dto.email}" já existe.`);
     }
 
-    const user = await this.userRepository.save(this.userRepository.create(dto));
+    const existingPhoneUser = await this.usersService.findByPhone(dto.phone);
 
-    return new LoginResponseDto((await this.createToken(user)));
+    if (existingPhoneUser) {
+      throw new ConflictException(`Utilizador com o telefone "${dto.phone}" já existe.`);
+    }
+    
+    const newUser = await this.usersService.create(dto);
+    return this.login(newUser);
+  }
+
+  async refreshToken(user: User): Promise<AuthResponseDto> {
+
+    const userWithNewVersion = await this.usersService.findById(user.userId);
+
+    if (!userWithNewVersion) {
+      throw new UnauthorizedException('Usuário não encontrado.');
+    }
+
+    const { accessToken, refreshToken } = await this.getTokens(userWithNewVersion);
+
+    await this.usersService.incrementTokenVersion(user.userId);
+    
+    return new AuthResponseDto(accessToken, refreshToken);
   }
 }

@@ -25,10 +25,7 @@ WORKDIR /app
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
-# Configurações essenciais para produção
-ENV NODE_ENV production
-ENV TZ America/Sao_Paulo
-RUN apk add --no-cache tzdata
+ENV NODE_ENV development
 
 EXPOSE 3000
 USER node
