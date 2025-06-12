@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/users.entity';
@@ -38,8 +38,13 @@ export class UsersService {
     });
   }
 
-  async update(userId: number, data: Partial<User>): Promise<void> {
-    await this.userRepository.update(userId, data);
+  async update(userId: number, data: Omit<Partial<User>, 'password'>): Promise<User> {
+    const user = await this.findById(userId);
+    if (!user) {
+      throw new NotFoundException(`Usuário com ID ${userId} não encontrado.`);
+    }
+    const updatedUser = this.userRepository.merge(user, data);
+    return this.userRepository.save(updatedUser);
   }
 
   async findByEmail(email: string): Promise<User | null> {
@@ -51,5 +56,16 @@ export class UsersService {
   async create(user: RegisterRequestDto): Promise<User> {
     const newUser = this.userRepository.create(user);
     return this.userRepository.save(newUser);
+  }
+
+  async delete(userId: number): Promise<void> {
+    const result = await this.userRepository.delete(userId);
+    if (result.affected === 0) {
+      throw new NotFoundException(`Usuário com ID ${userId} não encontrado.`);
+    }
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 }
