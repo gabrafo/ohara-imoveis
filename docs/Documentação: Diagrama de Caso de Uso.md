@@ -171,7 +171,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 - **Pré-condições:** O ator deve estar autenticado com perfil de "Corretor" ou "Administrador".
 - **Pós-condições:** Os dados de um proprietário são criados, atualizados ou removidos do sistema.
 
-**Fluxo Principal:**
+- **Fluxo Principal:**
 
 1. O ator acessa a funcionalidade e visualiza a lista de proprietários existentes.  
 2. O ator escolhe a operação desejada (adicionar, editar ou excluir).  
@@ -246,7 +246,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 - **Pré-condições:** Nenhuma. 
 - **Pós-condições:** O sistema exibe uma lista de imóveis que correspondem aos critérios de busca. 
 
-**Fluxo Principal:**
+- **Fluxo Principal:**
 
 1. O usuário acessa a página de busca de imóveis.  
 2. O usuário preenche os filtros desejados (ex: localização, preço, nº de quartos).  
@@ -261,7 +261,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 - **Pré-condições:** O ator deve estar autenticado. 
 - **Pós-condições:** Uma nova solicitação de visita é criada com status "Pendente", ou uma visita existente é cancelada. 
 
-**Fluxo Principal:**
+- **Fluxo Principal:**
 
 1. O Cliente, na página de um imóvel, clica em "Agendar Visita".  
 2. O sistema exibe um calendário, e o Cliente seleciona uma data e horário.  
@@ -276,7 +276,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 - **Pré-condições:** O ator deve estar autenticado com perfil de "Administrador". 
 - **Pós-condições:** O status da visita selecionada é atualizado para "Aprovada" ou "Rejeitada". 
 
-**Fluxo Principal:**
+- **Fluxo Principal:**
 
 1. O Administrador acessa o painel de gerenciamento de visitas.  
 2. O sistema exibe a lista de solicitações, e o Administrador seleciona uma que esteja pendente.  
