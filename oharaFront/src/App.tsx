@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen/LoginScreen";
+import HomeScreen from "./pages/HomeScreen/HomeScreen";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
 
           {/* Rota de cadastro */}
           <Route path="/register" element={<RegisterScreen />} />
+
+          {/* Rota da página inicial/home */}
+          <Route path="/home" element={<HomeScreen />} />
 
           {/* Rota para "esqueci a senha" (pode criar depois) */}
           <Route
