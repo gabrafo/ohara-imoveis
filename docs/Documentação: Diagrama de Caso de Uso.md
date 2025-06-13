@@ -218,7 +218,8 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 - **Atores:** Administrador 
 - **Tipo de Operação:** CRUD em entidade única (`User`). 
 - **Descrição Breve:** Permite ao Administrador consultar, alterar o perfil e ativar/desativar qualquer conta de usuário no sistema. 
-- **Pré-condições:* O ator deve estar autenticado com o perfil de "Administrador". **Pós-condições:** O status ou o perfil de um usuário selecionado é atualizado. 
+- **Pré-condições:* O ator deve estar autenticado com o perfil de "Administrador".
+- **Pós-condições:** O status ou o perfil de um usuário selecionado é atualizado. 
 
 - **Fluxo Principal:**
 
