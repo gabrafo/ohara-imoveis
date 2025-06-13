@@ -37,7 +37,7 @@ body {
   padding: 0;
 }
 
-.logo-image {
+.logo-pic {
   width: 65%;
   max-width: 350px; /* Limita o tamanho máximo do logo */
   height: auto;
@@ -246,7 +246,7 @@ form button:hover {
     margin-bottom: 2rem;
   }
 
-  .logo-image {
+  .logo-pic {
     width: 50%;
     max-width: 200px;
   }
@@ -271,7 +271,7 @@ form button:hover {
     min-height: 30vh;
   }
 
-  .logo-image {
+  .logo-pic {
     width: 40%;
     max-width: 150px;
   }

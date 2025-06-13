@@ -64,7 +64,7 @@ const LoginScreen: React.FC = () => {
 
       {/* Seção do Logo (direita) */}
       <div className="logo-section">
-        <img src={logo} alt="Ohara Imóveis Logo" className="logo-image" />
+        <img src={logo} alt="Ohara Imóveis Logo" className="logo-pic" />
       </div>
     </div>
   );
