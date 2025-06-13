@@ -148,7 +148,7 @@ Administrador --> (ManageAllVisits)
 @enduml
 ```
 
-[!Diagrama de caso de uso](https://github.com/gabrafo/ohara-imoveis/blob/main/docs/Diagrama%20de%20Casos%20de%20Uso.svg)
+![Diagrama de caso de uso](https://github.com/gabrafo/ohara-imoveis/blob/main/docs/Diagrama%20de%20Casos%20de%20Uso.svg)
 
 ## **3\. Diagrama de Casos de Uso**
 
