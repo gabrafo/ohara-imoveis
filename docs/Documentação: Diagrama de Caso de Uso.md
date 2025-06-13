@@ -178,6 +178,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. Para adição ou edição, o ator preenche o formulário com os dados do proprietário e confirma.  
 4. O sistema valida os dados e persiste a alteração no banco de dados.
 
+---
 
 - **ID:** UC-002
 - **Nome do Caso de Uso:** Gerenciar Características de Propriedades
@@ -193,6 +194,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. Para adição ou edição, preenche o nome da característica e confirma.  
 4. O sistema valida e salva a nova característica.
 
+---
 
 - **ID:** UC-003 
 - **Nome do Caso de Uso:** Gerenciar Meus Dados 
@@ -209,6 +211,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. O ator confirma as alterações.  
 4. O sistema valida os dados e atualiza o registro do usuário.
 
+---
 
 - **ID:** UC-004
 - **Nome do Caso de Uso:** Gerenciar Todos os Usuários*
@@ -223,7 +226,6 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 2. O sistema exibe a lista de todos os usuários.  
 3. O Administrador seleciona um usuário e realiza a alteração desejada (ex: muda o perfil para "Corretor").  
 4. O sistema aplica a modificação.
-
 
 ### **4.2. Casos de Uso com Operações em Múltiplas Entidades**
 
@@ -242,6 +244,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. O ator informa os valores para as características desejadas (ex: Nº de Quartos \= 3).  
 4. O ator submete o formulário, o sistema valida e salva os registros nas tabelas relacionadas.
 
+---
 
 - **ID:** UC-006 
 - **Nome do Caso de Uso:** Buscar Propriedades 
@@ -258,6 +261,7 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. O usuário aciona a busca.  
 4. O sistema exibe a lista de resultados correspondentes.
 
+---
 
 - **ID:** UC-007 
 - **Nome do Caso de Uso:** Gerenciar Minhas Visitas 
@@ -274,6 +278,8 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. O Cliente confirma a solicitação.  
 4. O sistema cria o registro da visita, associando o imóvel e o usuário.
 
+---
+
 - **ID:** UC-008 
 - **Nome do Caso de Uso:** Gerenciar Todas as Visitas 
 - **Atores:** Administrador 
@@ -281,7 +287,6 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 - **Descrição Breve:** Permite ao Administrador visualizar todas as solicitações de visita para aprová-las ou reprová-las. 
 - **Pré-condições:** O ator deve estar autenticado com perfil de "Administrador". 
 - **Pós-condições:** O status da visita selecionada é atualizado para "Aprovada" ou "Rejeitada". 
-
 
 - **Fluxo Principal:**
 
