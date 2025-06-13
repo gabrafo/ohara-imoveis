@@ -60,68 +60,6 @@ rectangle "Sistema Imobiliário" {
   }
 
   package "Usuários" {
-    usecase "Gerenciar Meus Dados"### **Documento de Requisitos: Casos de Uso do Sistema Imobiliário**
-
-**Data:** 13/06/2025
-
-#### **1\. Introdução**
-
-Este documento descreve os requisitos funcionais do Sistema Imobiliário através da metodologia de Casos de Uso da UML. O objetivo é detalhar as interações essenciais entre os atores e o sistema, servindo como um guia claro e direto para o desenvolvimento.
-
-#### **2\. Sobre a Ferramenta PlantUML**
-
-**O que é PlantUML?**
-
-PlantUML é uma ferramenta de código aberto que permite criar diagramas UML (e outros tipos) a partir de uma linguagem de descrição em texto. Em vez de desenhar visualmente, o desenvolvedor "escreve" o diagrama. Essa abordagem de "diagrama como código" facilita o controle de versão com ferramentas como Git, melhora a colaboração e automatiza a geração de documentação.
-
-Código-fonte do diagrama:
-```plantuml
-@startuml
-' --- Direção e Estilo ---
-left to right direction
-skinparam packageStyle rectangle
-
-' --- Atores ---
-' A hierarquia de generalização representa os níveis de permissão.
-actor Cliente
-actor Corretor
-actor Administrador
-
-Corretor --|> Cliente
-Administrador --|> Corretor
-
-' --- Casos de Uso do Sistema ---
-rectangle "Sistema Imobiliário" {
-
-  ' --- Notas Explicativas ---
-  note as GeneralNote
-    **Convenção de Nomenclatura:**
-    O termo "**Gerenciar**" nos casos de uso refere-se ao
-    conjunto completo de operações CRUD:
-    (Cadastrar, Consultar, Alterar e Excluir).
-  end note
-
-  note as AuthNote
-    **Requisito de Autenticação:**
-    A funcionalidade "Buscar Propriedades" é pública.
-    Todas as outras funcionalidades exigem que o
-    usuário esteja devidamente autenticado.
-  end note
-
-  ' --- Módulos e Funcionalidades ---
-  package "Propriedades" {
-    usecase "Buscar Propriedades" as (SearchProperties)
-    usecase "Gerenciar Propriedades" as (ManageProperties)
-    usecase "Gerenciar Características de Propriedades" as (ManageFeatureTypes)
-    usecase "Gerenciar Proprietários" as (ManageOwners)
-  }
-
-  package "Visitas" {
-    usecase "Gerenciar Minhas Visitas" as (ManageSelfVisits)
-    usecase "Gerenciar Todas as Visitas" as (ManageAllVisits)
-  }
-
-  package "Usuários" {
     usecase "Gerenciar Meus Dados" as (ManageSelf)
     usecase "Gerenciar Todos os Usuários" as (ManageAllUsers)
   }
