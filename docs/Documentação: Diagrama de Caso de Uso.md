@@ -163,13 +163,13 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 
 ### **4.1. Casos de Uso com Operações em Entidade Única**
 
-**ID:** UC-001
-**Nome do Caso de Uso:** Gerenciar Proprietários 
-**Atores:** Corretor, Administrador 
-**Tipo de Operação:** CRUD em entidade única (`Owner`).
-**Descrição Breve:** Permite ao ator realizar as operações de cadastro, consulta, alteração e exclusão dos dados de proprietários de imóveis.
-**Pré-condições:** O ator deve estar autenticado com perfil de "Corretor" ou "Administrador".
-**Pós-condições:** Os dados de um proprietário são criados, atualizados ou removidos do sistema.
+- **ID:** UC-001
+- **Nome do Caso de Uso:** Gerenciar Proprietários
+- **Atores:** Corretor, Administrador
+- **Tipo de Operação:** CRUD em entidade única (`Owner`).
+- **Descrição Breve:** Permite ao ator realizar as operações de cadastro, consulta, alteração e exclusão dos dados de proprietários de imóveis.
+- **Pré-condições:** O ator deve estar autenticado com perfil de "Corretor" ou "Administrador".
+- **Pós-condições:** Os dados de um proprietário são criados, atualizados ou removidos do sistema.
 
 **Fluxo Principal:**
 
@@ -178,44 +178,43 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. Para adição ou edição, o ator preenche o formulário com os dados do proprietário e confirma.  
 4. O sistema valida os dados e persiste a alteração no banco de dados.
 
-**ID:** UC-002
-**Nome do Caso de Uso:** Gerenciar Características de Propriedades
-**Atores:** Corretor, Administrador
-**Tipo de Operação:** CRUD em entidade única (`FeatureType`).
-**Descrição Breve:** Permite ao ator gerenciar os tipos de características que podem ser atribuídas a um imóvel (ex: "Piscina", "Nº de Quartos").
-**Pré-condições:** O ator deve estar autenticado com perfil de "Corretor" ou "Administrador".
-**Pós-condições:** Um tipo de característica é criado, alterado ou removido do sistema.
+- **ID:** UC-002
+- **Nome do Caso de Uso:** Gerenciar Características de Propriedades
+- **Atores:** Corretor, Administrador
+- **Tipo de Operação:** CRUD em entidade única (`FeatureType`).
+- **Descrição Breve:** Permite ao ator gerenciar os tipos de características que podem ser atribuídas a um imóvel (ex: "Piscina", "Nº de Quartos").
+- **Pré-condições:** O ator deve estar autenticado com perfil de "Corretor" ou "Administrador".
+- **Pós-condições:** Um tipo de característica é criado, alterado ou removido do sistema.
 
-**Fluxo Principal:**
-
+- **Fluxo Principal:**
 1. O ator acessa a funcionalidade e visualiza a lista de características existentes.  
 2. O ator seleciona a operação desejada.  
 3. Para adição ou edição, preenche o nome da característica e confirma.  
 4. O sistema valida e salva a nova característica.
 
-**ID:** UC-003 
-**Nome do Caso de Uso:** Gerenciar Meus Dados 
-**Atores:** Cliente, Corretor, Administrador 
-**Tipo de Operação:** CRUD em entidade única (`User`). 
-**Descrição Breve:** Permite que um usuário autenticado consulte e edite suas próprias informações cadastrais. 
-**Pré-condições:** O ator deve estar autenticado no sistema. 
-**Pós-condições:** Os dados pessoais do usuário autenticado são atualizados. 
+- **ID:** UC-003 
+- **Nome do Caso de Uso:** Gerenciar Meus Dados 
+- **Atores:** Cliente, Corretor, Administrador 
+- **Tipo de Operação:** CRUD em entidade única (`User`). 
+- **Descrição Breve:** Permite que um usuário autenticado consulte e edite suas próprias informações cadastrais. 
+- **Pré-condições:** O ator deve estar autenticado no sistema. 
+- **Pós-condições:** Os dados pessoais do usuário autenticado são atualizados. 
 
-**Fluxo Principal:**
+- **Fluxo Principal:**
 
 1. O ator acessa a sua página de perfil ou conta.  
 2. O ator edita os campos desejados (nome, telefone, senha).  
 3. O ator confirma as alterações.  
 4. O sistema valida os dados e atualiza o registro do usuário.
 
-**ID:** UC-004
-**Nome do Caso de Uso:** Gerenciar Todos os Usuários
-**Atores:** Administrador 
-**Tipo de Operação:** CRUD em entidade única (`User`). 
-**Descrição Breve:** Permite ao Administrador consultar, alterar o perfil e ativar/desativar qualquer conta de usuário no sistema. 
-**Pré-condições:** O ator deve estar autenticado com o perfil de "Administrador". **Pós-condições:** O status ou o perfil de um usuário selecionado é atualizado. 
+- **ID:** UC-004
+- **Nome do Caso de Uso:** Gerenciar Todos os Usuários
+- **Atores:** Administrador 
+- **Tipo de Operação:** CRUD em entidade única (`User`). 
+- **Descrição Breve:** Permite ao Administrador consultar, alterar o perfil e ativar/desativar qualquer conta de usuário no sistema. 
+- **Pré-condições:** O ator deve estar autenticado com o perfil de "Administrador". **Pós-condições:** O status ou o perfil de um usuário selecionado é atualizado. 
 
-**Fluxo Principal:**
+- **Fluxo Principal:**
 
 1. O Administrador acessa o painel de gerenciamento de usuários.  
 2. O sistema exibe a lista de todos os usuários.  
@@ -224,28 +223,28 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 
 ### **4.2. Casos de Uso com Operações em Múltiplas Entidades**
 
-**ID:** UC-005 
-**Nome do Caso de Uso:** Gerenciar Propriedades 
-**Atores:** Corretor, Administrador 
-**Tipo de Operação:** CRUD em múltiplas entidades (`Property`, `Address`, `PropertyFeature`). 
-**Descrição Breve:** Permite ao Corretor realizar o cadastro e a edição de um imóvel, associando seu endereço, proprietário e características. 
-**Pré-condições:** O ator deve estar autenticado com perfil de "Corretor" ou "Administrador". 
-**Pós-condições:** Um imóvel é criado ou atualizado no sistema, juntamente com seus dados associados. 
+- **ID:** UC-005 
+- **Nome do Caso de Uso:** Gerenciar Propriedades 
+- **Atores:** Corretor, Administrador 
+- **Tipo de Operação:** CRUD em múltiplas entidades (`Property`, `Address`, `PropertyFeature`). 
+- **Descrição Breve:** Permite ao Corretor realizar o cadastro e a edição de um imóvel, associando seu endereço, proprietário e características. 
+- **Pré-condições:** O ator deve estar autenticado com perfil de "Corretor" ou "Administrador". 
+- **Pós-condições:** Um imóvel é criado ou atualizado no sistema, juntamente com seus dados associados. 
 
-**Fluxo Principal:**
+- **Fluxo Principal:**
 
 1. O ator seleciona a opção para cadastrar ou editar um imóvel.  
 2. O sistema apresenta um formulário para preenchimento dos dados do imóvel, endereço e seleção do proprietário.  
 3. O ator informa os valores para as características desejadas (ex: Nº de Quartos \= 3).  
 4. O ator submete o formulário, o sistema valida e salva os registros nas tabelas relacionadas.
 
-**ID:** UC-006 
-**Nome do Caso de Uso:** Buscar Propriedades 
-**Atores:** Cliente, Corretor, Administrador, Visitante (Público) 
-**Tipo de Operação:** Operação de leitura em múltiplas entidades. 
-**Descrição Breve:** Permite a qualquer usuário encontrar imóveis no catálogo através de filtros de busca. 
-**Pré-condições:** Nenhuma. 
-**Pós-condições:** O sistema exibe uma lista de imóveis que correspondem aos critérios de busca. 
+- **ID:** UC-006 
+- **Nome do Caso de Uso:** Buscar Propriedades 
+- **Atores:** Cliente, Corretor, Administrador, Visitante (Público) 
+- **Tipo de Operação:** Operação de leitura em múltiplas entidades. 
+- **Descrição Breve:** Permite a qualquer usuário encontrar imóveis no catálogo através de filtros de busca. 
+- **Pré-condições:** Nenhuma. 
+- **Pós-condições:** O sistema exibe uma lista de imóveis que correspondem aos critérios de busca. 
 
 **Fluxo Principal:**
 
@@ -254,13 +253,13 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. O usuário aciona a busca.  
 4. O sistema exibe a lista de resultados correspondentes.
 
-**ID:** UC-007 
-**Nome do Caso de Uso:** Gerenciar Minhas Visitas 
-**Atores:** Cliente, Corretor, Administrador 
-**Tipo de Operação:** CRUD em múltiplas entidades (`Visit`, `Property`, `User`).
-**Descrição Breve:** Permite que um cliente solicite o agendamento de uma visita a um imóvel e, posteriormente, visualize ou cancele suas visitas agendadas. 
-**Pré-condições:** O ator deve estar autenticado. 
-**Pós-condições:** Uma nova solicitação de visita é criada com status "Pendente", ou uma visita existente é cancelada. 
+- **ID:** UC-007 
+- **Nome do Caso de Uso:** Gerenciar Minhas Visitas 
+- **Atores:** Cliente, Corretor, Administrador 
+- **Tipo de Operação:** CRUD em múltiplas entidades (`Visit`, `Property`, `User`).
+- **Descrição Breve:** Permite que um cliente solicite o agendamento de uma visita a um imóvel e, posteriormente, visualize ou cancele suas visitas agendadas. 
+- **Pré-condições:** O ator deve estar autenticado. 
+- **Pós-condições:** Uma nova solicitação de visita é criada com status "Pendente", ou uma visita existente é cancelada. 
 
 **Fluxo Principal:**
 
@@ -269,13 +268,13 @@ O diagrama abaixo, gerado com PlantUML, ilustra as funcionalidades do sistema, o
 3. O Cliente confirma a solicitação.  
 4. O sistema cria o registro da visita, associando o imóvel e o usuário.
 
-**ID:** UC-008 
-**Nome do Caso de Uso:** Gerenciar Todas as Visitas 
-**Atores:** Administrador 
-**Tipo de Operação:** CRUD em múltiplas entidades (`Visit`, `Property`, `User`). 
-**Descrição Breve:** Permite ao Administrador visualizar todas as solicitações de visita para aprová-las ou reprová-las. 
-**Pré-condições:** O ator deve estar autenticado com perfil de "Administrador". 
-**Pós-condições:** O status da visita selecionada é atualizado para "Aprovada" ou "Rejeitada". 
+- **ID:** UC-008 
+- **Nome do Caso de Uso:** Gerenciar Todas as Visitas 
+- **Atores:** Administrador 
+- **Tipo de Operação:** CRUD em múltiplas entidades (`Visit`, `Property`, `User`). 
+- **Descrição Breve:** Permite ao Administrador visualizar todas as solicitações de visita para aprová-las ou reprová-las. 
+- **Pré-condições:** O ator deve estar autenticado com perfil de "Administrador". 
+- **Pós-condições:** O status da visita selecionada é atualizado para "Aprovada" ou "Rejeitada". 
 
 **Fluxo Principal:**
 
