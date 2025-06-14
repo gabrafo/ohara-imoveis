@@ -1,5 +1,4 @@
-
-# Protipo Figma - Ohara Imóveis
+# Protótipo Figma - Ohara Imóveis
 
 Este arquivo contém os links diretos para o projeto de design e o protótipo navegável do "Ohara Imóveis" no Figma.
 
