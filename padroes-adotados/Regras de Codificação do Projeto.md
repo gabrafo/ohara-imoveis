@@ -1,3 +1,5 @@
+# Regras de Codificação do Projeto
+
 Para garantir a qualidade, manutenibilidade e colaboração eficiente no desenvolvimento do projeto, o grupo adotará as seguintes regras de codificação, além das práticas obrigatórias de padronização de notação e documentação de código.
 
 1. Princípio da Responsabilidade Única (SRP)
