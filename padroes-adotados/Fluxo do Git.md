@@ -58,12 +58,12 @@ Com a branch no servidor, acesse a interface do seu serviço de Git (GitHub, Git
 
 No Pull Request, descreva as alterações que você fez. É aqui que os testes automatizados (CI/CD) irão rodar e onde sua equipe pode revisar o código, sugerir melhorias e aprovar a integração.
 
-## 1.1.6. Integre (Merge) o Pull Request
+#### 1.1.6. Integre (Merge) o Pull Request
 
 Após a aprovação (e com os testes passando), o Pull Request pode ser "merged". Isso significa que todo o código da sua feat/login-com-google será integrado à branch develop.  
 Normalmente, isso é feito clicando no botão "Merge" na interface do GitHub/GitLab.
 
-## 1.1.7. Limpeza (Opcional, mas Recomendado)
+#### 1.1.7. Limpeza (Opcional, mas Recomendado)
 
 Após o merge, a feature branch já cumpriu seu propósito. Você pode deletá-la para manter o repositório limpo.  
 \# Volte para a branch develop  
