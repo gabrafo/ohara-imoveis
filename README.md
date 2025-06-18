@@ -42,19 +42,19 @@ A seleção da stack tecnológica para este projeto visa o uso de ferramentas mo
 
 * **Frontend (`/web`):**
     * **HTML/CSS:** Linguagens fundamentais para a estruturação semântica e estilização visual das interfaces web.
-    * **ReactJS:** Biblioteca JavaScript declarativa e componentizada para a construção de interfaces de usuário interativas e eficientes.
-    * **TypeScript:** Superset do JavaScript que adiciona tipagem estática ao código, promovendo maior robustez, legibilidade e manutenibilidade no desenvolvimento frontend.
-    * **Vite:** Ferramenta de build moderna e de alta performance para projetos frontend, oferecendo um servidor de desenvolvimento rápido com Hot Module Replacement (HMR) e otimizações de build para produção.
+    * **ReactJS (v19.1.0):** Biblioteca JavaScript declarativa e componentizada para a construção de interfaces de usuário interativas e eficientes.
+    * **TypeScript (v5.8.3):** Superset do JavaScript que adiciona tipagem estática ao código, promovendo maior robustez, legibilidade e manutenibilidade no desenvolvimento frontend.
+    * **Vite (v6.3.5):** Ferramenta de build moderna e de alta performance para projetos frontend, oferecendo um servidor de desenvolvimento rápido com Hot Module Replacement (HMR) e otimizações de build para produção.
 
 * **Backend (`/api`):**
-    * **NestJS:** Framework Node.js progressivo para a construção de aplicações backend eficientes, escaláveis e robustas, utilizando TypeScript por padrão e promovendo arquiteturas modulares.
-    * **TypeScript:** Linguagem principal para o desenvolvimento backend, garantindo consistência com o frontend e aproveitando os benefícios da tipagem estática e recursos modernos do JavaScript.
-    * **TypeORM:** Object-Relational Mapper (ORM) para TypeScript e JavaScript, facilitando a interação com o banco de dados através de uma camada de abstração orientada a objetos.
-    * **Swagger (OpenAPI via NestJS):** Ferramenta integrada ao NestJS para a geração automática de documentação interativa de APIs RESTful, seguindo a especificação OpenAPI.
-    * **PostgreSQL:** Sistema de Gerenciamento de Banco de Dados Relacional (SGBDR) objeto, conhecido por sua confiabilidade, extensibilidade e conformidade com padrões SQL.
+    * **NestJS (v11.1.3):** Framework Node.js progressivo para a construção de aplicações backend eficientes, escaláveis e robustas, utilizando TypeScript por padrão e promovendo arquiteturas modulares.
+    * **TypeScript (v5.8.3):** Linguagem principal para o desenvolvimento backend, garantindo consistência com o frontend e aproveitando os benefícios da tipagem estática e recursos modernos do JavaScript.
+    * **TypeORM (v0.3.24):** Object-Relational Mapper (ORM) para TypeScript e JavaScript, facilitando a interação com o banco de dados através de uma camada de abstração orientada a objetos.
+    * **Swagger (OpenAPI via NestJS) (v11.2.0):** Ferramenta integrada ao NestJS para a geração automática de documentação interativa de APIs RESTful, seguindo a especificação OpenAPI.
+    * **PostgreSQL (v15):** Sistema de Gerenciamento de Banco de Dados Relacional (SGBDR) objeto, conhecido por sua confiabilidade, extensibilidade e conformidade com padrões SQL.
 
 * **Testes:**
-    * **Jest:** Framework de testes JavaScript amplamente utilizado, escolhido para a implementação de testes unitários tanto no frontend (componentes React e lógica de UI) quanto no backend (serviços, controladores e lógica de negócio no NestJS).
+    * **Jest (v29.5.0):** Framework de testes JavaScript amplamente utilizado, escolhido para a implementação de testes unitários tanto no frontend (componentes React e lógica de UI) quanto no backend (serviços, controladores e lógica de negócio no NestJS).
 
 * **Conteinerização:**
     * **Docker:** Plataforma para desenvolvimento, distribuição e execução de aplicações em contêineres. Será utilizada para empacotar a aplicação e suas dependências (Node.js, PostgreSQL, etc.), garantindo consistência entre ambientes e simplificando o processo de deploy.
