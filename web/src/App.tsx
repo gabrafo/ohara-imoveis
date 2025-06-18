@@ -5,9 +5,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen/LoginScreen";
-import HomeScreen from "./pages/HomeScreen/HomeScreen";
 
 function App() {
   return (
