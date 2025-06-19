@@ -1,0 +1,5 @@
+export enum OfferType {
+  FOR_RENTAL = 'FOR_RENTAL',
+  FOR_SALE = 'FOR_SALE',
+  FOR_COMMERCIAL_RENT = 'FOR_COMMERCIAL_RENT'
+} 

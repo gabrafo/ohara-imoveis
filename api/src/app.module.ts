@@ -6,6 +6,12 @@ import { AuthModule } from './auth/auth.module';
 import { AppService } from './app.service';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { FeatureTypesModule } from './feature-types/feature-types.module';
+import { OwnersModule } from './owners/owners.module';
+import { PropertyFeaturesModule } from './property-features/property-features.module';
+import { VisitsModule } from './visits/visits.module';
+import { PropertiesModule } from './properties/properties.module';
+import { AddressesModule } from './addresses/addresses.module';
 
 @Module({
   imports: [
@@ -39,7 +45,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
 
     UsersModule,
-    AuthModule
+    AuthModule,
+    VisitsModule,
+    FeatureTypesModule,
+    OwnersModule,
+    PropertyFeaturesModule,
+    PropertiesModule,
+    AddressesModule
   ],
   controllers: [AppController],
   providers: [AppService],
