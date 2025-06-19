@@ -22,7 +22,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     });
   }
 
-  async validate(payload: { sub: number; jti: string; exp: number; aud: string, version: number }): Promise<any> {
+  async validate(payload: { sub: number; exp: number; aud: string, version: number }): Promise<any> {
     
     const user = await this.usersService.findById(payload.sub);
 
@@ -35,6 +35,6 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     }
 
     const { password, ...result } = user;
-    return { ...result, jti: payload.jti, exp: payload.exp, version: payload.version, aud: payload.aud };
+    return { ...result, exp: payload.exp, version: payload.version, aud: payload.aud };
   }
 }

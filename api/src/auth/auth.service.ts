@@ -7,7 +7,6 @@ import { AuthResponseDto } from './dto/response/auth.response.dto';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from 'src/users/users.service';
 import { ConfigService } from '@nestjs/config';
-import { randomUUID } from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -34,9 +33,8 @@ export class AuthService {
   }
 
   private async getTokens(user: Omit<User, 'password'>): Promise<{ accessToken: string; refreshToken: string }> {
-    const jti = randomUUID();
-    const accessTokenPayload = { sub: user.userId, role: user.role, aud: 'access', jti, version: user.tokenVersion };
-    const refreshTokenPayload = { sub: user.userId, aud: 'refresh', jti, version: user.tokenVersion };
+    const accessTokenPayload = { sub: user.userId, role: user.role, aud: 'access', version: user.tokenVersion };
+    const refreshTokenPayload = { sub: user.userId, aud: 'refresh', version: user.tokenVersion };
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(accessTokenPayload, {

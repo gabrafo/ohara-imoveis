@@ -35,6 +35,6 @@ export class JwtRefreshStrategy extends PassportStrategy(Strategy, 'jwt-refresh'
       throw new UnauthorizedException('Token inválido.');
     }
 
-    return { ...user, jti: payload.jti, exp: payload.exp, version: payload.version, aud: payload.aud };
+    return { ...user, exp: payload.exp, version: payload.version, aud: payload.aud };
   }
 }
