@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import "./LoginScreen.css"; // Importando nossos estilos
 import logo from "../../assets/logo.svg"; // Importando o logo
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const LoginScreen: React.FC = () => {
   // Estados para controlar os valores dos inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   // Função para lidar com o envio do formulário
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault(); // Previne o recarregamento da página
-
-    console.log({
-      email,
-      password,
-    });
-
-    alert(`Login enviado!\nEmail: ${email}`);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    
+    try {
+      await login(email, password);
+      navigate('/home');
+    } catch (err) {
+      setError('Credenciais inválidas. Verifique seu email e senha.');
+      console.error('Erro ao fazer login:', err);
+    }
   };
 
   return (

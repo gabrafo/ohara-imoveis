@@ -8,9 +8,31 @@ import {
 import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen/LoginScreen";
 import HomeScreen from "./pages/HomeScreen/HomeScreen";
+import type { ReactNode } from "react";
+import { AuthProvider, useAuth } from "./context/AuthContext";
+
+type ProtectedRouteProps = {
+  children: ReactNode;
+};
+
+const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+  const auth = useAuth();
+
+  // Garantimos que auth não é undefined antes de acessar suas propriedades.
+  if (!auth || auth.loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (!auth.user) {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
+};
 
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <div>
         <Routes>
@@ -24,7 +46,7 @@ function App() {
           <Route path="/register" element={<RegisterScreen />} />
 
           {/* Rota da página inicial/home */}
-          <Route path="/home" element={<HomeScreen />} />
+          <Route path="/home" element={<ProtectedRoute><HomeScreen /></ProtectedRoute>} />
 
           {/* Rota para "esqueci a senha" (pode criar depois) */}
           <Route
@@ -34,9 +56,10 @@ function App() {
 
           {/* Rota 404 - página não encontrada */}
           <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </div>
-    </Router>
+          </Routes>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
