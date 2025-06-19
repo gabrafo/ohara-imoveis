@@ -51,7 +51,6 @@ describe('JwtRefreshStrategy', () => {
     const mockRequest = {} as Request;
     const payload = {
       sub: 1,
-      jti: 'test-jti',
       exp: Date.now() + 604800000, // 7 days
       aud: 'refresh',
       version: 1,
@@ -64,7 +63,6 @@ describe('JwtRefreshStrategy', () => {
 
       expect(result).toEqual({
         ...mockUser,
-        jti: payload.jti,
         exp: payload.exp,
         version: payload.version,
         aud: payload.aud,
