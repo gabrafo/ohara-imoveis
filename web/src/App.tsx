@@ -9,6 +9,8 @@ import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen/LoginScreen";
 import HomeScreen from "./pages/HomeScreen/HomeScreen";
 import SearchPropertiesScreen from "./pages/SearchPropertiesScreen/SearchPropertiesScreen";
+import PropertyDetailsScreen from "./pages/PropertyDetailsScreen/PropertyDetails";
+
 import type { ReactNode } from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
@@ -18,15 +20,8 @@ type ProtectedRouteProps = {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const auth = useAuth();
-
-  if (!auth || auth.loading) {
-    return <div>Carregando...</div>;
-  }
-
-  if (!auth.user) {
-    return <Navigate to="/login" />;
-  }
-
+  if (!auth || auth.loading) return <div>Carregando...</div>;
+  if (!auth.user) return <Navigate to="/login" />;
   return children;
 };
 
@@ -39,25 +34,19 @@ function App() {
             {/* Rota padrão redireciona para home */}
             <Route path="/" element={<Navigate to="/home" replace />} />
 
-            {/* Rota de login */}
+            {/* Rotas existentes */}
             <Route path="/login" element={<LoginScreen />} />
-
-            {/* Rota de cadastro */}
             <Route path="/register" element={<RegisterScreen />} />
-
-            {/* Rota da página inicial/home SEM proteção */}
             <Route path="/home" element={<HomeScreen />} />
-
-            {/* Rota de busca de imóveis SEM proteção */}
             <Route path="/search" element={<SearchPropertiesScreen />} />
 
-            {/* Rota para "esqueci a senha" (pode criar depois) */}
+            {/* ATUALIZADO: Nova rota para detalhes do imóvel */}
+            <Route path="/imovel/:id" element={<PropertyDetailsScreen />} />
+
             <Route
               path="/forgot-password"
               element={<div>Página em construção</div>}
             />
-
-            {/* Rota 404 - página não encontrada */}
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </div>

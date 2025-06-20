@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { Variants } from "framer-motion";
 import { Search, Bed, Bath, Square, MapPin } from "lucide-react";
 import "./SearchPropertiesScreen.css";
@@ -22,6 +22,7 @@ interface Property {
 }
 
 const SearchPropertiesScreen: React.FC = () => {
+  const navigate = useNavigate(); // Hook para navegação
   const [activeTab, setActiveTab] = useState("Alugar");
   const [propertyType, setPropertyType] = useState("Tipo de Imóvel");
   const [priceRange, setPriceRange] = useState("Preço do Imóvel");
@@ -200,6 +201,11 @@ const SearchPropertiesScreen: React.FC = () => {
     setFilteredProperties(filtered);
   };
 
+  // Função para navegar para a página de detalhes
+  const handleViewDetails = (propertyId: number) => {
+    navigate(`/imovel/${propertyId}`);
+  };
+
   // Atualizar filtros automaticamente quando activeTab mudar
   React.useEffect(() => {
     handleSearch();
@@ -357,6 +363,7 @@ const SearchPropertiesScreen: React.FC = () => {
                   </div>
                   <motion.button
                     className="result-details-btn"
+                    onClick={() => handleViewDetails(property.id)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
