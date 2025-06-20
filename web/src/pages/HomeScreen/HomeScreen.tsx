@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // Link já estava importado, o que é ótimo!
 import type { Variants } from "framer-motion";
-import { Search, Bed, Bath, Square, Phone, Mail, MapPin } from "lucide-react";
+import { Search, Bed, Bath, Square, MapPin } from "lucide-react";
 import "./HomeScreen.css";
 import HousePic from "../../assets/house01.png";
 import CasaGrid from "../../assets/casagrid01.png";
 import CasaGrid2 from "../../assets/casagrid02.png";
-import Logo02 from "../../assets/logo02.svg";
-import CasaAbout from "../../assets/casa1.png";
 import NavBar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
+import CasaAbout from "../../assets/casa1.png";
 
 interface Property {
   id: number;
@@ -82,10 +81,8 @@ const HomeScreen: React.FC = () => {
 
   return (
     <div className="app">
-      {/* NavBar Component */}
       <NavBar />
 
-      {/* Hero Section */}
       <section className="hero">
         <div className="container">
           <motion.div
@@ -130,14 +127,18 @@ const HomeScreen: React.FC = () => {
                   <Search size={20} />
                 </motion.button>
               </motion.div>
-              <motion.button
-                className="view-all-btn"
-                variants={itemVariants}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Ver todos imóveis ›
-              </motion.button>
+
+              {/* --- BOTÃO "VER TODOS IMÓVEIS" ATUALIZADO COM LINK --- */}
+              <Link to="/search">
+                <motion.button
+                  className="view-all-btn"
+                  variants={itemVariants}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Ver todos imóveis ›
+                </motion.button>
+              </Link>
             </div>
             <motion.div
               className="hero-right"
@@ -155,7 +156,6 @@ const HomeScreen: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Properties */}
       <section className="featured">
         <div className="container">
           <motion.h2
@@ -204,6 +204,14 @@ const HomeScreen: React.FC = () => {
                       <span>{property.area}m²</span>
                     </span>
                   </div>
+
+                  {/* --- BOTÃO "VER DETALHES" ADICIONADO --- */}
+                  <Link
+                    to={`/imovel/${property.id}`}
+                    className="details-btn-link"
+                  >
+                    <button className="details-btn">Ver detalhes</button>
+                  </Link>
                 </div>
               </motion.div>
             ))}
@@ -211,7 +219,6 @@ const HomeScreen: React.FC = () => {
         </div>
       </section>
 
-      {/* About Section */}
       <section className="about">
         <div className="container">
           <motion.div
@@ -267,7 +274,6 @@ const HomeScreen: React.FC = () => {
         </div>
       </section>
 
-      {/* Footer Component */}
       <Footer />
     </div>
   );

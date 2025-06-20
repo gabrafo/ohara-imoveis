@@ -1,0 +1,346 @@
+/* src/pages/ManageVisitsScreen/ManageVisitsScreen.css */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+  --background-color: #f8f9fa;
+  --primary-text-color: #212529;
+  --secondary-text-color: #6c757d;
+  --border-color: #dee2e6;
+  --primary-brand-color: #0d6efd;
+  --dark-color: #18181b;
+  --light-gray: #f1f3f5;
+  --white: #ffffff;
+}
+
+.manage-visits-screen {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  min-height: 100vh;
+}
+
+.visits-main-content .container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+/* --- PAINEL DE AÇÕES (ASIDE) --- */
+.visits-actions {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.visits-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.add-btn {
+  background-color: var(--dark-color);
+  color: var(--white);
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-container label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--primary-text-color);
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-brand-color);
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.pagination-info {
+  font-size: 0.9rem;
+  color: var(--secondary-text-color);
+  margin-top: 1rem;
+}
+
+/* --- SEÇÃO DA TABELA --- */
+.visits-table-section {
+  flex-grow: 1;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.visits-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.visits-table th,
+.visits-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.visits-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--secondary-text-color);
+  font-weight: 600;
+}
+
+.visits-table td {
+  font-size: 0.9rem;
+  color: var(--primary-text-color);
+}
+
+/* --- NOVAS CORES DE STATUS PARA VISITAS --- */
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--white);
+  text-transform: capitalize;
+}
+
+.status-agendada {
+  background-color: #0d6efd;
+}
+.status-concluida {
+  background-color: #198754;
+}
+.status-pendente {
+  background-color: #ffc107;
+  color: var(--dark-color);
+}
+.status-cancelada {
+  background-color: #6c757d;
+}
+
+.action-icons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+  transition: color 0.2s;
+}
+
+.icon-btn:hover {
+  color: var(--primary-brand-color);
+}
+
+/* --- ESTILOS DO MODAL (REUTILIZADOS) --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  background: var(--white);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px; /* Modal um pouco menor pois tem menos campos */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+.modal-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  margin: 0;
+}
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+}
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.modal-form input,
+.modal-form select {
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  background: var(--white);
+  width: 100%;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.modal-actions button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-primary {
+  background-color: var(--dark-color);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background-color: #343a40;
+}
+.btn-secondary {
+  background-color: var(--light-gray);
+  color: var(--primary-text-color);
+  border-color: var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: var(--border-color);
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: var(--white);
+}
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 1279px) {
+  .visits-main-content .container {
+    flex-direction: column;
+  }
+  .visits-actions {
+    position: static;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .visits-table thead {
+    display: none;
+  }
+  .visits-table tr {
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: var(--white);
+  }
+  .visits-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    text-align: right;
+    border-bottom: 1px dashed var(--light-gray);
+  }
+  .visits-table td:last-child {
+    border-bottom: none;
+  }
+  .visits-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--primary-text-color);
+    text-align: left;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 599px) {
+  .visits-main-content .container {
+    padding: 2rem 1rem;
+  }
+  .visits-title {
+    font-size: 2rem;
+  }
+  .modal-content {
+    padding: 1.5rem 1rem;
+    max-height: 95vh;
+  }
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .modal-actions button {
+    width: 100%;
+  }
+}

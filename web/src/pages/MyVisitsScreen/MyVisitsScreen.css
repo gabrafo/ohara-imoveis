@@ -1,0 +1,292 @@
+/* src/pages/MyVisitsScreen/MyVisitsScreen.css */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&display=swap");
+
+.my-visits-app {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.my-visits-container {
+  padding: 120px 0 60px;
+  flex-grow: 1;
+}
+
+.my-visits-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.8rem;
+  color: #1f201f;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.my-visits-subtitle {
+  text-align: center;
+  color: #6c757d;
+  font-size: 1.1rem;
+  margin-bottom: 3.5rem;
+}
+
+/* --- NOVO LAYOUT EM GRID --- */
+.visits-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.visit-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.07);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.visit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.visit-card-image {
+  width: 100%;
+  height: 220px; /* Aumentei a altura para cortar menos a imagem */
+  position: relative;
+}
+
+.visit-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.visit-status-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.status-agendada {
+  background-color: #0d6efd;
+}
+.status-concluída {
+  background-color: #198754;
+}
+.status-cancelada {
+  background-color: #6c757d;
+}
+
+.visit-card-info {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex-grow: 1; /* Faz esta área crescer e empurra as ações para baixo */
+}
+
+.visit-property-title {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  margin: 0;
+  color: #1f201f;
+  line-height: 1.3;
+}
+
+.visit-property-location {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.visit-date-time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.visit-detail-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* --- ESTILOS PARA EDIÇÃO DE HORÁRIO --- */
+.time-edit-container {
+  flex-grow: 1;
+}
+.time-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+}
+
+.visit-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: auto; /* Empurra para o final do card */
+  padding-top: 1rem;
+}
+
+.action-btn-visits {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.edit-btn {
+  border-color: #6c757d;
+  color: #6c757d;
+  background: transparent;
+}
+.edit-btn:hover {
+  background: #6c757d;
+  color: #fff;
+}
+
+.cancel-btn {
+  border-color: #dc3545;
+  color: #dc3545;
+  background: transparent;
+}
+.cancel-btn:hover {
+  background: #dc3545;
+  color: #fff;
+}
+
+.save-btn {
+  border-color: #198754;
+  color: #fff;
+  background: #198754;
+}
+.save-btn:hover {
+  background: #157347;
+  border-color: #157347;
+}
+
+.cancel-edit-btn {
+  flex-grow: 0; /* Não cresce tanto */
+  border-color: #ccc;
+  color: #555;
+  background: transparent;
+}
+.cancel-edit-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.no-visits-message {
+  text-align: center;
+  padding: 3rem;
+  color: #6c757d;
+  font-style: italic;
+  grid-column: 1 / -1; /* Ocupa todas as colunas do grid */
+}
+
+/* Modal Styles (sem alterações) */
+.modal-overlay-visits {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+.modal-content-visits {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+.modal-header-visits {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.modal-header-visits h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.5rem;
+  margin: 0;
+}
+.modal-close-btn-visits {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6c757d;
+}
+.modal-body-visits {
+  margin-bottom: 2rem;
+  color: #333;
+  line-height: 1.6;
+}
+.modal-body-visits strong {
+  color: #1f201f;
+}
+.modal-actions-visits {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.modal-actions-visits button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-secondary-visits {
+  background-color: #e9ecef;
+  color: #333;
+  border-color: #dee2e6;
+}
+.btn-secondary-visits:hover {
+  background-color: #dee2e6;
+}
+.btn-danger-visits {
+  background-color: #dc3545;
+  color: white;
+}
+.btn-danger-visits:hover {
+  background-color: #c82333;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  .visits-list {
+    grid-template-columns: 1fr; /* Uma coluna em telas bem pequenas */
+  }
+}
