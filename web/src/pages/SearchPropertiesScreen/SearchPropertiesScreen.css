@@ -1,0 +1,286 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+/* Estilos Gerais */
+.search-app {
+  background-color: #f7f7f7;
+  min-height: 100vh;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Seção Hero */
+.search-hero {
+  background: #1f201f;
+  color: white;
+  padding: 120px 0 60px;
+  text-align: center;
+}
+.search-hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.search-hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+.search-hero-subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+  opacity: 0.8;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Formulário de Busca */
+.search-form {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.search-filters {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.search-tabs-container {
+  display: flex;
+  background-color: #eeeeee;
+  border-radius: 8px;
+  padding: 5px;
+  border: 1px solid #e0e0e0;
+}
+
+.search-tab {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  background-color: transparent;
+  border-radius: 6px;
+  color: #555;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.search-tab.active {
+  background-color: #1f201f;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transform: scale(1.02);
+}
+
+.filter-select {
+  padding: 0.9rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 100%;
+  height: 100%;
+}
+.filter-select:focus {
+  outline: none;
+  border-color: #1f201f;
+  box-shadow: 0 0 0 3px rgba(31, 32, 31, 0.1);
+}
+
+.search-action-btn {
+  background: #1f201f;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.search-action-btn:hover {
+  background: #333;
+}
+
+/* Seção de Resultados */
+.search-results {
+  padding: 60px 0;
+}
+.results-count {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.results-grid {
+  /* Grid com largura fixa de 280px para cada card */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 280px);
+  gap: 2rem;
+  /* Centraliza os cards no container */
+  justify-content: center;
+}
+
+.result-card {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  /* Largura fixa para evitar expansão */
+  width: 280px;
+}
+
+.result-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.result-image {
+  /* Altura fixa para manter consistência */
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+  /* Largura fixa da imagem */
+  width: 100%;
+}
+
+.result-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.result-card:hover .result-image img {
+  transform: scale(1.05);
+}
+
+.result-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #1f201f;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.result-info {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.result-price {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.result-location {
+  color: #666;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.result-details {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: #666;
+  font-weight: 400;
+  margin-bottom: 1.25rem;
+}
+
+.result-detail {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.result-details-btn {
+  background: transparent;
+  border: 2px solid #1f201f;
+  color: #1f201f;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  margin-top: auto;
+  font-family: "Poppins", sans-serif;
+  text-align: center;
+}
+
+.result-details-btn:hover {
+  background: #1f201f;
+  color: white;
+}
+
+/* Design Responsivo */
+@media (max-width: 992px) {
+  .search-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .results-grid {
+    /* Em tablets, mantém o tamanho fixo mas centraliza melhor */
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-filters {
+    grid-template-columns: 1fr;
+  }
+  .search-hero-title {
+    font-size: 2.5rem;
+  }
+
+  .results-grid {
+    /* Em mobile, permite que se ajuste ao espaço disponível */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    justify-content: center;
+  }
+
+  .result-card {
+    /* Em mobile, permite largura variável mas limitada */
+    width: 100%;
+    max-width: 320px;
+  }
+}

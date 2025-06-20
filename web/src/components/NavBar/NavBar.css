@@ -1,0 +1,92 @@
+/* NavBar */
+.navbar {
+  background: #1f201f;
+  color: white;
+  padding: 1rem 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Logo no canto superior esquerdo */
+.navbar-logo {
+  margin-left: 0;
+  order: 1;
+}
+
+.navbar-logo-image {
+  height: 60px;
+  width: auto;
+}
+
+/* Nav no canto superior direito */
+.navbar-nav {
+  display: flex;
+  gap: 2rem;
+  margin-left: auto;
+  order: 2;
+}
+
+.navbar-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 400;
+  transition: opacity 0.3s;
+  position: relative;
+}
+
+.navbar-nav a:hover,
+.navbar-nav a.active {
+  opacity: 0.8;
+}
+
+.navbar-nav a.active::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .navbar-logo {
+    order: 1;
+    margin-left: 0;
+  }
+
+  .navbar-nav {
+    order: 2;
+    margin-left: auto;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-nav {
+    gap: 1rem;
+  }
+
+  .navbar-nav a {
+    font-size: 0.8rem;
+  }
+}

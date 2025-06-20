@@ -8,6 +8,7 @@ import {
 import RegisterScreen from "./pages/RegisterScreen/RegisterScreen";
 import LoginScreen from "./pages/LoginScreen/LoginScreen";
 import HomeScreen from "./pages/HomeScreen/HomeScreen";
+import SearchPropertiesScreen from "./pages/SearchPropertiesScreen/SearchPropertiesScreen";
 import type { ReactNode } from "react";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
@@ -18,7 +19,6 @@ type ProtectedRouteProps = {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const auth = useAuth();
 
-  // Garantimos que auth não é undefined antes de acessar suas propriedades.
   if (!auth || auth.loading) {
     return <div>Carregando...</div>;
   }
@@ -33,29 +33,32 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 function App() {
   return (
     <AuthProvider>
-    <Router>
-      <div>
-        <Routes>
-          {/* Rota padrão redireciona para login */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+      <Router>
+        <div>
+          <Routes>
+            {/* Rota padrão redireciona para home */}
+            <Route path="/" element={<Navigate to="/home" replace />} />
 
-          {/* Rota de login */}
-          <Route path="/login" element={<LoginScreen />} />
+            {/* Rota de login */}
+            <Route path="/login" element={<LoginScreen />} />
 
-          {/* Rota de cadastro */}
-          <Route path="/register" element={<RegisterScreen />} />
+            {/* Rota de cadastro */}
+            <Route path="/register" element={<RegisterScreen />} />
 
-          {/* Rota da página inicial/home */}
-          <Route path="/home" element={<ProtectedRoute><HomeScreen /></ProtectedRoute>} />
+            {/* Rota da página inicial/home SEM proteção */}
+            <Route path="/home" element={<HomeScreen />} />
 
-          {/* Rota para "esqueci a senha" (pode criar depois) */}
-          <Route
-            path="/forgot-password"
-            element={<div>Página em construção</div>}
-          />
+            {/* Rota de busca de imóveis SEM proteção */}
+            <Route path="/search" element={<SearchPropertiesScreen />} />
 
-          {/* Rota 404 - página não encontrada */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
+            {/* Rota para "esqueci a senha" (pode criar depois) */}
+            <Route
+              path="/forgot-password"
+              element={<div>Página em construção</div>}
+            />
+
+            {/* Rota 404 - página não encontrada */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </div>
       </Router>
