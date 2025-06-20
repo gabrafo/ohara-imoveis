@@ -1,0 +1,100 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap");
+
+/* Footer */
+.footer {
+  background: #141414;
+  color: white;
+  padding: 60px 0 40px;
+}
+
+.footer .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 3rem;
+}
+
+.footer-logo {
+  margin-bottom: 1rem;
+}
+
+.footer-logo-image {
+  height: 60px;
+  width: auto;
+}
+
+.footer-section p {
+  line-height: 1.6;
+  opacity: 0.8;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+}
+
+.footer-section h4 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.footer-section ul li a {
+  color: white;
+  text-decoration: none;
+  opacity: 0.8;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+  transition: opacity 0.3s;
+}
+
+.footer-section ul li a:hover {
+  opacity: 1;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  opacity: 0.8;
+  font-weight: 400;
+  font-family: "Poppins", sans-serif;
+}
+
+.contact-item span {
+  flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
