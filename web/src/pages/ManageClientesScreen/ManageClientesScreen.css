@@ -1,0 +1,338 @@
+/* src/pages/ManageClientsScreen/ManageClientsScreen.css */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap");
+
+.manage-clients-screen {
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f4f5;
+  color: #18181b;
+  min-height: 100vh;
+}
+
+.clients-main-content .container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  gap: 2.5rem;
+}
+
+/* Coluna da Esquerda */
+.clients-actions {
+  flex: 0 0 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.clients-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.add-btn {
+  background-color: #18181b;
+  color: white;
+}
+
+.pagination-info {
+  font-size: 0.9rem;
+  color: #71717a;
+  margin-top: auto;
+  padding-top: 2rem;
+}
+
+/* Coluna da Direita (Tabela) */
+.clients-table-section {
+  flex-grow: 1;
+  width: 100%;
+  overflow-x: auto; /* Permite rolagem horizontal APENAS na tabela */
+}
+
+.clients-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.clients-table th,
+.clients-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e4e4e7;
+  vertical-align: middle;
+  white-space: nowrap; /* Impede que o texto quebre em várias linhas */
+}
+
+.clients-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #71717a;
+  font-weight: 500;
+}
+
+.clients-table td {
+  font-size: 0.9rem;
+  color: #3f3f46;
+}
+
+.action-icons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: #71717a;
+  transition: color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover {
+  color: #18181b;
+}
+
+/* Paginação */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  background-color: white;
+  border: 1px solid #e4e4e7;
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.pagination button:hover {
+  background-color: #f4f4f5;
+}
+
+.pagination button.active {
+  background-color: #18181b;
+  color: white;
+  border-color: #18181b;
+}
+
+/* --- ESTILOS DA BUSCA --- */
+.search-container {
+  display: flex;
+  flex-direction: column;
+}
+.search-container label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: #3f3f46;
+}
+.search-input {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #e4e4e7;
+  font-size: 1rem;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #18181b;
+  box-shadow: 0 0 0 2px rgba(24, 24, 27, 0.2);
+}
+
+/* --- ESTILOS DO MODAL --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+}
+
+.modal-content {
+  background: white;
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e4e4e7;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #71717a;
+}
+.modal-close-btn:hover {
+  color: #18181b;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.modal-form input {
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #e4e4e7;
+  font-size: 1rem;
+}
+
+.modal-body p {
+  line-height: 1.6;
+  color: #3f3f46;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.modal-actions button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #18181b;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #e4e4e7;
+  color: #3f3f46;
+}
+
+.btn-danger {
+  background-color: #dc2626;
+  color: white;
+}
+
+/*
+==============================================
+          REGRAS DE RESPONSIVIDADE
+==============================================
+*/
+
+/* TABLETS (até 1279px) */
+@media (max-width: 1279px) {
+  .clients-main-content .container {
+    flex-direction: column; /* Empilha a coluna de ações e a tabela */
+  }
+
+  .clients-actions {
+    flex: 1;
+    width: 100%;
+    margin-bottom: 2rem;
+    flex-basis: auto; /* Reseta a base fixa */
+  }
+}
+
+/* TABLETS MENORES (até 768px) */
+@media (max-width: 768px) {
+  .clients-main-content .container {
+    padding: 2rem 1.5rem; /* Reduz o padding lateral */
+  }
+
+  .clients-title {
+    font-size: 2.2rem; /* Título um pouco menor */
+  }
+
+  .clients-table th,
+  .clients-table td {
+    padding: 0.9rem 1rem; /* Menos preenchimento nas células */
+  }
+}
+
+/* SMARTPHONES (até 599px) */
+@media (max-width: 599px) {
+  .clients-main-content .container {
+    padding: 1.5rem 1rem; /* Padding mínimo para telas pequenas */
+  }
+
+  .clients-title {
+    font-size: 1.8rem; /* Título menor para smartphones */
+  }
+
+  .action-btn,
+  .modal-actions button {
+    font-size: 0.9rem; /* Fontes dos botões um pouco menores */
+  }
+
+  /* Ajustes do Modal para telas pequenas */
+  .modal-content {
+    padding: 1.5rem 1rem;
+  }
+
+  .modal-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .modal-actions {
+    flex-direction: column; /* Empilha os botões do modal */
+    gap: 0.75rem;
+  }
+
+  .modal-actions button {
+    width: 100%; /* Botões ocupam a largura total */
+  }
+}

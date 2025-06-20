@@ -1,0 +1,481 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+  --background-color: #f8f9fa;
+  --primary-text-color: #212529;
+  --secondary-text-color: #6c757d;
+  --border-color: #dee2e6;
+  --primary-brand-color: #0d6efd;
+  --dark-color: #18181b;
+  --light-gray: #f1f3f5;
+  --white: #ffffff;
+}
+
+.manage-properties-screen {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  min-height: 100vh;
+}
+
+.properties-main-content .container {
+  max-width: 1400px; /* Aumentado para dar mais espaço à tabela */
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+/* --- PAINEL DE AÇÕES (ASIDE) --- */
+.properties-actions {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.properties-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.add-btn {
+  background-color: var(--dark-color);
+  color: var(--white);
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-container label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--primary-text-color);
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-brand-color);
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.pagination-info {
+  font-size: 0.9rem;
+  color: var(--secondary-text-color);
+  margin-top: 1rem;
+}
+
+/* --- SEÇÃO DA TABELA (COM ALTERAÇÃO) --- */
+.properties-table-section {
+  flex-grow: 1;
+  width: 100%;
+  /* ALTERAÇÃO: overflow-x removido para evitar a barra de rolagem */
+}
+
+.properties-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  /* ALTERAÇÃO: min-width removido para permitir que a tabela se ajuste ao container */
+}
+
+.properties-table th,
+.properties-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+  /* ALTERAÇÃO: white-space removido para permitir que o conteúdo quebre a linha */
+}
+
+/* Mantém o título com mais espaço e capacidade de quebra de linha */
+.properties-table th:nth-child(2),
+.properties-table td:nth-child(2) {
+  min-width: 250px; /* Dá mais espaço para o título */
+  word-break: break-word; /* Garante a quebra de palavras longas */
+}
+
+.properties-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--secondary-text-color);
+  font-weight: 600;
+}
+
+.properties-table td {
+  font-size: 0.9rem;
+  color: var(--primary-text-color);
+}
+
+.table-thumbnail {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.status-badge {
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--white);
+  text-transform: capitalize;
+  white-space: nowrap; /* Impede que o status quebre a linha */
+}
+
+.status-disponível {
+  background-color: #198754;
+}
+.status-reservado {
+  background-color: #ffc107;
+  color: var(--dark-color);
+}
+.status-vendido,
+.status-alugado {
+  background-color: #dc3545;
+}
+
+.action-icons {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+  transition: color 0.2s;
+}
+
+.icon-btn:hover {
+  color: var(--primary-brand-color);
+}
+
+/* --- ESTILOS DO MODAL --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  background: var(--white);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 700px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+.modal-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  margin: 0;
+}
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+}
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.modal-form input,
+.modal-form select {
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  background: var(--white);
+  width: 100%;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* --- ALTERAÇÃO AQUI: Estilos para o novo container de label + input --- */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary-text-color);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.modal-actions button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-primary {
+  background-color: var(--dark-color);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background-color: #343a40;
+}
+.btn-secondary {
+  background-color: var(--light-gray);
+  color: var(--primary-text-color);
+  border-color: var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: var(--border-color);
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: var(--white);
+}
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* --- GERENCIADOR DE IMAGENS --- */
+.image-manager {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+.image-manager h4 {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+.image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+}
+.image-preview-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  aspect-ratio: 4 / 3;
+}
+.image-preview-item.main {
+  border-color: var(--primary-brand-color);
+}
+.image-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.image-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.image-preview-item:hover .image-overlay {
+  opacity: 1;
+}
+.image-overlay button {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--dark-color);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+.image-overlay button:hover {
+  transform: scale(1.1);
+}
+.main-image-badge {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  background-color: rgba(13, 110, 253, 0.85);
+  color: var(--white);
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.upload-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 4 / 3;
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  color: var(--secondary-text-color);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.upload-box:hover {
+  background-color: var(--light-gray);
+  border-color: var(--primary-brand-color);
+  color: var(--primary-brand-color);
+}
+.upload-box span {
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 1200px) {
+  .properties-main-content .container {
+    flex-direction: column;
+  }
+  .properties-actions {
+    position: static;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  /* LÓGICA DA TABELA RESPONSIVA */
+  .properties-table thead {
+    display: none;
+  }
+  .properties-table tr {
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: var(--white);
+  }
+  .properties-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    text-align: right;
+    border-bottom: 1px dashed var(--light-gray);
+  }
+  .properties-table td:last-child {
+    border-bottom: none;
+  }
+  .properties-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--primary-text-color);
+    text-align: left;
+    margin-right: 1rem;
+  }
+  .properties-table td:first-child {
+    justify-content: center;
+    padding-bottom: 1rem;
+  }
+  .table-thumbnail {
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 599px) {
+  .properties-main-content .container {
+    padding: 2rem 1rem;
+  }
+  .properties-title {
+    font-size: 2rem;
+  }
+  .modal-content {
+    padding: 1.5rem 1rem;
+    max-height: 95vh;
+  }
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .modal-actions button {
+    width: 100%;
+  }
+  .properties-table tr {
+    padding: 0.75rem;
+  }
+}

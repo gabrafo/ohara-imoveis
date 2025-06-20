@@ -1,0 +1,124 @@
+/* NavBar de Gerenciamento */
+.mgmt-navbar {
+  background: #1f201f;
+  padding: 1rem 0;
+  width: 100%;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.mgmt-navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.5rem;
+}
+
+.logo-image {
+  height: 45px;
+  width: auto;
+  display: block;
+}
+
+.mgmt-navbar-nav {
+  display: flex;
+  gap: 2rem;
+}
+
+.mgmt-navbar-nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 400;
+  transition: opacity 0.3s, color 0.3s;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.mgmt-navbar-nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: white;
+  transform: scaleX(0);
+  transform-origin: bottom center;
+  transition: transform 0.3s ease-out;
+}
+
+.mgmt-navbar-nav a:hover::after,
+.mgmt-navbar-nav a.active::after {
+  transform: scaleX(1);
+}
+
+.mgmt-navbar-nav a.active {
+  font-weight: 600;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+/* --- REGRAS RESPONSIVAS --- */
+@media (max-width: 768px) {
+  .mgmt-navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 1rem;
+    position: relative;
+  }
+
+  /* Logo fica sempre na esquerda */
+  .mgmt-navbar-logo {
+    flex: 0 0 auto;
+  }
+
+  /* Botão do menu fica sempre na direita */
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-left: auto;
+  }
+
+  /* Menu lateral deslizando da direita */
+  .mgmt-navbar-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100vh;
+    background: #1f201f;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6rem 2rem 2rem;
+    gap: 1.5rem;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 1050;
+  }
+
+  /* Mostra o menu quando a classe 'active' está presente */
+  .mgmt-navbar-nav.active {
+    transform: translateX(0);
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Estilo dos links dentro do menu lateral */
+  .mgmt-navbar-nav a {
+    font-size: 1.2rem;
+    width: 100%;
+  }
+}

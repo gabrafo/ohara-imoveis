@@ -1,0 +1,413 @@
+/* src/pages/ManageOwnersScreen/ManageOwnersScreen.css */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap");
+
+:root {
+  --background-color: #f8f9fa;
+  --primary-text-color: #212529;
+  --secondary-text-color: #6c757d;
+  --border-color: #dee2e6;
+  --primary-brand-color: #0d6efd;
+  --dark-color: #18181b;
+  --light-gray: #f1f3f5;
+  --white: #ffffff;
+}
+
+.manage-owners-screen {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-text-color);
+  min-height: 100vh;
+}
+
+.owners-main-content .container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  display: flex;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+/* --- PAINEL DE AÇÕES (ASIDE) --- */
+.owners-actions {
+  flex: 0 0 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: sticky;
+  top: 2rem;
+}
+
+.owners-title {
+  font-family: "Playfair Display", serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.add-btn {
+  background-color: var(--dark-color);
+  color: var(--white);
+}
+
+.search-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-container label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--primary-text-color);
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--primary-brand-color);
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+}
+
+.pagination-info {
+  font-size: 0.9rem;
+  color: var(--secondary-text-color);
+  margin-top: 1rem;
+}
+
+/* --- SEÇÃO DA TABELA --- */
+.owners-table-section {
+  flex-grow: 1;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.owners-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.owners-table th,
+.owners-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.owners-table th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--secondary-text-color);
+  font-weight: 600;
+}
+
+.owners-table td {
+  font-size: 0.9rem;
+  color: var(--primary-text-color);
+}
+
+.action-icons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-start;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+  transition: color 0.2s;
+}
+
+.icon-btn:hover {
+  color: var(--primary-brand-color);
+}
+
+/* --- ESTILOS DO MODAL --- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+.modal-content {
+  background: var(--white);
+  padding: 1.5rem 2rem;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+}
+.modal-header h2 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.75rem;
+  margin: 0;
+}
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+}
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.modal-form input {
+  padding: 0.8rem 1rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  font-size: 1rem;
+  background: var(--white);
+  width: 100%;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.modal-actions button {
+  padding: 0.75rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-primary {
+  background-color: var(--dark-color);
+  color: var(--white);
+}
+.btn-primary:hover {
+  background-color: #343a40;
+}
+.btn-secondary {
+  background-color: var(--light-gray);
+  color: var(--primary-text-color);
+  border-color: var(--border-color);
+}
+.btn-secondary:hover {
+  background-color: var(--border-color);
+}
+.btn-danger {
+  background-color: #dc3545;
+  color: var(--white);
+}
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* --- ESTILOS PARA O GERENCIADOR DE IMÓVEIS NO MODAL --- */
+.property-manager {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.property-manager h4 {
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: var(--primary-text-color);
+}
+
+.property-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background-color: var(--light-gray);
+}
+
+.property-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.property-item:last-child {
+  border-bottom: none;
+}
+
+.property-item.view-only {
+  justify-content: flex-start;
+}
+
+.property-item span {
+  font-size: 0.9rem;
+}
+
+/* --- CORREÇÃO DO BOTÃO REMOVER --- */
+.property-item button {
+  background: none;
+  border: none;
+  color: var(--secondary-text-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center; /* Centraliza o ícone */
+  justify-content: center; /* Centraliza o ícone */
+  width: 28px; /* Define largura fixa */
+  height: 28px; /* Define altura fixa */
+  border-radius: 50%; /* Mantém o círculo */
+  padding: 0; /* Remove padding extra */
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.property-item button:hover {
+  color: var(--white);
+  background-color: #dc3545; /* Vermelho para exclusão */
+}
+/* --- FIM DA CORREÇÃO --- */
+
+.empty-list {
+  padding: 1rem;
+  text-align: center;
+  color: var(--secondary-text-color);
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.add-property-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.add-property-form input {
+  flex-grow: 1;
+}
+
+.btn-add-property {
+  padding: 0.8rem 1.25rem;
+  border: none;
+  background-color: var(--primary-brand-color);
+  color: var(--white);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.btn-add-property:hover {
+  background-color: #0b5ed7;
+}
+
+/* --- RESPONSIVIDADE --- */
+@media (max-width: 1279px) {
+  .owners-main-content .container {
+    flex-direction: column;
+  }
+  .owners-actions {
+    position: static;
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .owners-table thead {
+    display: none;
+  }
+  .owners-table tr {
+    display: block;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    background-color: var(--white);
+  }
+  .owners-table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0.5rem;
+    text-align: right;
+    border-bottom: 1px dashed var(--light-gray);
+  }
+  .owners-table td:last-child {
+    border-bottom: none;
+  }
+  .owners-table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--primary-text-color);
+    text-align: left;
+    margin-right: 1rem;
+  }
+}
+
+@media (max-width: 599px) {
+  .owners-main-content .container {
+    padding: 2rem 1rem;
+  }
+  .owners-title {
+    font-size: 2rem;
+  }
+  .modal-content {
+    padding: 1.5rem 1rem;
+    max-height: 95vh;
+  }
+  .modal-header h2 {
+    font-size: 1.5rem;
+  }
+  .modal-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .modal-actions button {
+    width: 100%;
+  }
+}
