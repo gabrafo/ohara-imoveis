@@ -7,7 +7,8 @@ export class PropertyFeature {
   @PrimaryGeneratedColumn()
   propertyFeatureId: number;
 
-  @ManyToOne(() => Property, (property) => property.features)
+  @ManyToOne(() => Property)
+  @JoinColumn({ name: 'propertyId' })
   property: Property;
 
   @ManyToOne(() => FeatureType)

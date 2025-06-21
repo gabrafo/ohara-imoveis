@@ -1,11 +1,8 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { User } from '../../users/entities/users.entity';
-import { Address } from '../../addresses/entities/address.entity';
-import { PropertyStatus } from 'src/common/enums/property-status.enum';
-import { OfferType } from 'src/common/enums/offer-type.enum';
-import { VisitStatus } from 'src/common/enums/visit-status.enum';
-import { Visit } from 'src/visits/entities/visit.entity';
-import { PropertyFeature } from 'src/property-features/entities/property-feature.entity';
+import { Owner } from '../../owners/entities/owner.entity';
+import { PropertyStatus } from '../../common/enums/property-status.enum';
+import { OfferType } from '../../common/enums/offer-type.enum';
+import { Address } from '../addresses/entities/address.entity'
 
 @Entity()
 export class Property {
@@ -15,9 +12,9 @@ export class Property {
   @Column(() => Address)
   address: Address;
 
-  @ManyToOne(() => User)
+  @ManyToOne(() => Owner, owner => owner.properties)
   @JoinColumn({ name: 'ownerId' })
-  owner: User;
+  owner: Owner;
 
   @Column('decimal', { precision: 10, scale: 2 })
   price: number;
@@ -38,14 +35,15 @@ export class Property {
   @Column('decimal', { precision: 10, scale: 2 })
   area: number;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'date', default: () => 'CURRENT_TIMESTAMP' })
   registrationDate: Date;
 
-  @OneToMany(() => PropertyFeature, (feature) => feature.property, {
-    cascade: true
-  })
-  features: PropertyFeature[];
+  @OneToMany('PropertyImage', 'property')
+  images: any[];
 
-  @OneToMany(() => Visit, (visit) => visit.property)
-  visits: Visit[];
-}
+  @OneToMany('Visit', 'property')
+  visits: any[];
+
+  @OneToMany('PropertyFeature', 'property')
+  features: any[];
+} 

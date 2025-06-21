@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { forwardRef } from '@nestjs/common';
 
 @Entity()
 export class Owner {
@@ -11,6 +12,9 @@ export class Owner {
   @Column()
   contactPhone: string;
 
-  @Column({ nullable: true })
-  cpf?: string;
-} 
+  @Column({ nullable: true, unique: true })
+  cpf: string;
+
+  @OneToMany('Property', 'owner')
+  properties: any[];
+}
