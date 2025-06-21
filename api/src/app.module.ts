@@ -10,8 +10,8 @@ import { FeatureTypesModule } from './feature-types/feature-types.module';
 import { OwnersModule } from './owners/owners.module';
 import { PropertyFeaturesModule } from './property-features/property-features.module';
 import { VisitsModule } from './visits/visits.module';
+import { PropertyImagesModule } from './property-images/property-images.module';
 import { PropertiesModule } from './properties/properties.module';
-import { AddressesModule } from './addresses/addresses.module';
 
 @Module({
   imports: [
@@ -51,7 +51,7 @@ import { AddressesModule } from './addresses/addresses.module';
     OwnersModule,
     PropertyFeaturesModule,
     PropertiesModule,
-    AddressesModule
+    PropertyImagesModule
   ],
   controllers: [AppController],
   providers: [AppService],

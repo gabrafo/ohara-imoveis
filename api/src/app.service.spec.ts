@@ -2,19 +2,23 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppService } from './app.service';
 
 describe('AppService', () => {
-  let appService: AppService;
+  let service: AppService;
 
   beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+    const module: TestingModule = await Test.createTestingModule({
       providers: [AppService],
     }).compile();
 
-    appService = app.get<AppService>(AppService);
+    service = module.get<AppService>(AppService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
   });
 
   describe('getDefaultResponse', () => {
     it('should return "healthy"', () => {
-      expect(appService.getDefaultResponse()).toBe('healthy');
+      expect(service.getDefaultResponse()).toBe('healthy');
     });
   });
 });
