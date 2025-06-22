@@ -1,0 +1,6 @@
+export enum PropertyStatus {
+  AVAILABLE = 'AVAILABLE',
+  UNAVAILABLE = 'UNAVAILABLE',
+  PENDING = 'PENDING',
+  CONCLUDED = 'CONCLUDED'
+} 

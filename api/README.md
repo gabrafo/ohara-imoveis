@@ -27,25 +27,32 @@ Crie um ficheiro .env a partir do exemplo abaixo e preencha com os seus valores.
 
 **Exemplo de .env:**
 
-\# Configuração da Aplicação  
-PORT=8000  
-NODE\_ENV=development  
-CORS\_ORIGIN=http://localhost:3000
+```bash
+# Configuração da Aplicação
+PORT=8000
+NODE_ENV=development
+CORS_ORIGIN=http://localhost:3000
 
-\# Configuração do Banco de Dados (PostgreSQL)  
-DB\_HOST=db  
-DB\_PORT=5432  
-POSTGRES\_USER=admin  
-POSTGRES\_PASSWORD=sua\_senha\_segura\_aqui  
-POSTGRES\_DB=ohara-imoveis
+# Configuração do Banco de Dados (PostgreSQL)
+POSTGRES_DB=ohara-imoveis
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=admin
+DB_HOST=db
+DB_PORT=5432
 
-\# Segredos e Expiração dos JWTs  
-JWT\_ACCESS\_SECRET=seu\_segredo\_super\_secreto\_para\_access\_token  
-JWT\_ACCESS\_EXPIRATION\_TIME=15m  
-JWT\_REFRESH\_SECRET=seu\_outro\_segredo\_muito\_mais\_seguro\_para\_refresh\_token  
-JWT\_REFRESH\_EXPIRATION\_TIME=7d
+# Segredos e Expiração dos JWTs
+JWT_ACCESS_SECRET=chave_super_secreta_para_access_token_em_desenvolvimento
+JWT_ACCESS_EXPIRATION_TIME=15m
+JWT_REFRESH_SECRET=chave_muito_secreta_para_refresh_token_em_desenvolvimento
+JWT_REFRESH_EXPIRATION_TIME=7d
 
-SONAR\_TOKEN=seu\_token
+# Configurações do Rate Limit
+THROTTLE_TTL=60000
+THROTTLE_LIMIT=10
+
+# SonarQube (Opcional)
+SONAR_TOKEN=seu_token
+```
 
 **Importante:** O ficheiro .env está listado no .gitignore e não deve ser comitado no repositório.
 

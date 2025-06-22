@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, BeforeUpdate, OneToMany } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Role } from '../../common/enums/role.enum'; 
+import { Visit } from '../../visits/entities/visit.entity';
 
 @Entity()
 export class User {
@@ -31,6 +32,12 @@ export class User {
 
   @Column({ type: 'int', default: 1, select: false })
   tokenVersion: number;
+
+  @OneToMany(() => Visit, visit => visit.customer)
+  customerVisits: Visit[];
+
+  @OneToMany(() => Visit, visit => visit.broker)
+  brokerVisits: Visit[];
 
   @BeforeInsert()
   @BeforeUpdate()

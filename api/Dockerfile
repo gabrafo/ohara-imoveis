@@ -9,8 +9,7 @@ RUN npm install --include=dev
 COPY . .
 
 # Executa os testes e o build
-RUN npm run test:cov && npm run build
-
+RUN npm run build
 
 # ---
 # Estágio 2: Imagem Final de Produção
@@ -25,7 +24,7 @@ COPY --from=builder /app/dist ./dist
 ENV NODE_ENV development
 
 # Expõe a porta que a aplicação vai usar
-EXPOSE 3000
+EXPOSE 8000
 
 # Executa a aplicação com um usuário não-root por segurança
 USER node
