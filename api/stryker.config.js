@@ -20,6 +20,8 @@ module.exports = {
     "src/app.service.ts",
     "src/users/users.controller.ts",
     "src/users/users.service.ts",
+    "src/properties/properties.controller.ts",
+    "src/properties/properties.service.ts",
   ],
   thresholds: {
     high: 80,

@@ -9,6 +9,7 @@ import { PropertyListResponseDto } from '../dto/response/property-list.response.
 import { OfferType } from '../../common/enums/offer-type.enum';
 import { PropertyStatus } from '../../common/enums/property-status.enum';
 import { NotFoundException } from '@nestjs/common';
+import { PaginateQuery } from 'nestjs-paginate';
 
 describe('PropertiesController', () => {
   let controller: PropertiesController;
@@ -87,8 +88,9 @@ describe('PropertiesController', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of properties', async () => {
+    it('should return paginated properties', async () => {
       // Dados de teste
+      const query: PaginateQuery = { page: 1, limit: 10, path: 'properties' };
       const filters: FilterPropertyRequestDto = {
         minPrice: 200000,
         maxPrice: 400000,
@@ -113,30 +115,76 @@ describe('PropertiesController', () => {
         },
       ];
 
+      const paginatedResult = {
+        data: properties,
+        meta: {
+          itemsPerPage: 10,
+          totalItems: 2,
+          currentPage: 1,
+          totalPages: 1,
+          sortBy: [['propertyId', 'DESC']] as any,
+          searchBy: [] as string[],
+          search: '',
+          select: ['propertyId', 'price', 'area', 'status', 'offerType'] as string[],
+          filter: {},
+        },
+        links: {
+          first: '/properties?page=1&limit=10',
+          previous: '',
+          current: '/properties?page=1&limit=10',
+          next: '',
+          last: '/properties?page=1&limit=10',
+        },
+      };
+
       // Configuração do mock
-      service.findAll.mockResolvedValue(properties);
+      service.findAll.mockResolvedValue(paginatedResult);
 
       // Execução
-      const result = await controller.findAll(filters);
+      const result = await controller.findAll(query, filters);
 
       // Verificações
-      expect(service.findAll).toHaveBeenCalledWith(filters);
-      expect(result).toHaveLength(2);
-      expect(result[0]).toBeInstanceOf(PropertyListResponseDto);
-      expect(result[0].propertyId).toBe(properties[0].propertyId);
-      expect(result[1].propertyId).toBe(properties[1].propertyId);
+      expect(service.findAll).toHaveBeenCalledWith(query, filters);
+      expect(result.data).toHaveLength(2);
+      expect(result.data[0]).toBeInstanceOf(PropertyListResponseDto);
+      expect(result.data[0].propertyId).toBe(properties[0].propertyId);
+      expect(result.data[1].propertyId).toBe(properties[1].propertyId);
     });
 
     it('should return an empty array if no properties are found', async () => {
+      // Dados de teste
+      const query: PaginateQuery = { page: 1, limit: 10, path: 'properties' };
+      const emptyPaginatedResult = {
+        data: [],
+        meta: {
+          itemsPerPage: 10,
+          totalItems: 0,
+          currentPage: 1,
+          totalPages: 0,
+          sortBy: [['propertyId', 'DESC']] as any,
+          searchBy: [] as string[],
+          search: '',
+          select: ['propertyId', 'price', 'area', 'status', 'offerType'] as string[],
+          filter: {},
+        },
+        links: {
+          first: '/properties?page=1&limit=10',
+          previous: '',
+          current: '/properties?page=1&limit=10',
+          next: '',
+          last: '/properties?page=1&limit=10',
+        },
+      };
+
       // Configuração do mock
-      service.findAll.mockResolvedValue([]);
+      service.findAll.mockResolvedValue(emptyPaginatedResult);
 
       // Execução
-      const result = await controller.findAll({});
+      const result = await controller.findAll(query, {});
 
       // Verificações
-      expect(service.findAll).toHaveBeenCalledWith({});
-      expect(result).toEqual([]);
+      expect(service.findAll).toHaveBeenCalledWith(query, {});
+      expect(result.data).toEqual([]);
     });
   });
 
