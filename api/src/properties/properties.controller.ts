@@ -9,6 +9,7 @@ import { PropertyListResponseDto } from './dto/response/property-list.response.d
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/guards/roles.guard';
+import { Paginate, PaginateQuery, Paginated } from 'nestjs-paginate';
 
 @ApiTags('Propriedades')
 @Controller('properties')
@@ -32,15 +33,23 @@ export class PropertiesController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Listar propriedades com filtros opcionais' })
+  @ApiOperation({ summary: 'Listar propriedades com filtros opcionais e paginação' })
   @ApiResponse({
     status: 200,
     description: 'Lista de propriedades retornada com sucesso',
     type: [PropertyListResponseDto],
   })
-  async findAll(@Query() filters: FilterPropertyRequestDto): Promise<PropertyListResponseDto[]> {
-    const properties = await this.propertiesService.findAll(filters);
-    return properties.map(property => new PropertyListResponseDto(property));
+  async findAll(
+    @Paginate() query: PaginateQuery,
+    @Query() filters: FilterPropertyRequestDto,
+  ): Promise<Paginated<any>> {
+    const paginatedProperties = await this.propertiesService.findAll(query, filters);
+    
+    // Transformar os itens para o DTO de resposta
+    return {
+      ...paginatedProperties,
+      data: paginatedProperties.data.map(property => new PropertyListResponseDto(property))
+    };
   }
 
   @Get(':id')

@@ -10,6 +10,7 @@ import { AxiosResponse } from 'axios';
 import { OwnersService } from 'src/owners/owners.service';
 import { UpdatePropertyRequestDto } from './dto/request/update-property.request.dto';
 import { FilterPropertyRequestDto } from './dto/request/filter-property.request.dto';
+import { FilterOperator, paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 
 @Injectable()
 export class PropertiesService {
@@ -38,43 +39,39 @@ export class PropertiesService {
     return this.propertiesRepository.save(property);
   }
 
-  async findAll(filters?: FilterPropertyRequestDto): Promise<Property[]> {
+  async findAll(query: PaginateQuery, filters?: FilterPropertyRequestDto): Promise<Paginated<Property>> {
     const queryBuilder = this.propertiesRepository.createQueryBuilder('property')
       .leftJoinAndSelect('property.owner', 'owner')
       .leftJoinAndSelect('property.features', 'features')
       .leftJoinAndSelect('property.images', 'images');
 
-    if (filters) {
-      if (filters.minPrice) {
-        queryBuilder.andWhere('property.price >= :minPrice', { minPrice: filters.minPrice });
-      }
-      
-      if (filters.maxPrice) {
-        queryBuilder.andWhere('property.price <= :maxPrice', { maxPrice: filters.maxPrice });
-      }
-      
-      if (filters.minArea) {
-        queryBuilder.andWhere('property.area >= :minArea', { minArea: filters.minArea });
-      }
-      
-      if (filters.maxArea) {
-        queryBuilder.andWhere('property.area <= :maxArea', { maxArea: filters.maxArea });
-      }
-      
-      if (filters.status) {
-        queryBuilder.andWhere('property.status = :status', { status: filters.status });
-      }
-      
-      if (filters.offerType) {
-        queryBuilder.andWhere('property.offerType = :offerType', { offerType: filters.offerType });
-      }
-      
-      if (filters.ownerId) {
-        queryBuilder.andWhere('property.owner.ownerId = :ownerId', { ownerId: filters.ownerId });
-      }
+    if (filters?.minPrice) {
+      queryBuilder.andWhere('property.price >= :minPrice', { minPrice: filters.minPrice });
+    }
+    
+    if (filters?.maxPrice) {
+      queryBuilder.andWhere('property.price <= :maxPrice', { maxPrice: filters.maxPrice });
+    }
+    
+    if (filters?.minArea) {
+      queryBuilder.andWhere('property.area >= :minArea', { minArea: filters.minArea });
+    }
+    
+    if (filters?.maxArea) {
+      queryBuilder.andWhere('property.area <= :maxArea', { maxArea: filters.maxArea });
     }
 
-    return queryBuilder.getMany();
+    return paginate(query, queryBuilder, {
+      sortableColumns: ['propertyId', 'price', 'area', 'registrationDate'],
+      defaultSortBy: [['propertyId', 'DESC']],
+      searchableColumns: ['address.city', 'address.neighborhood'],
+      select: ['propertyId', 'price', 'area', 'status', 'offerType'],
+      filterableColumns: {
+        status: [FilterOperator.EQ],
+        offerType: [FilterOperator.EQ],
+        'owner.ownerId': [FilterOperator.EQ],
+      },
+    });
   }
 
   async findOne(id: number): Promise<Property> {
@@ -148,7 +145,6 @@ export class PropertiesService {
         throw new BadRequestException('CEP não encontrado.');
       }
       
-      // Converter resposta da API para o formato da entidade Address
       const address = new Address();
       address.zipCode = cep;
       address.street = response.data.logradouro;
