@@ -4,6 +4,7 @@ import type { FC, ReactNode } from "react";
 import { Pencil, Trash2, X, Home } from "lucide-react"; // Adicionado o ícone Home
 import ManagementNavBar from "../../components/ManagementNavBar/ManagementNavBar";
 import "./ManageOwnersScreen.css";
+import OwnersService from '../../services/owners.service';
 
 // --- INTERFACES DE TIPAGEM ATUALIZADAS ---
 interface PropertyInfo {
@@ -15,8 +16,7 @@ interface Owner {
   id: number | null;
   name: string;
   cpf: string;
-  email: string;
-  phone: string;
+  contactPhone: string;
   properties: PropertyInfo[]; // Alterado de propertyCount para uma lista de imóveis
 }
 
@@ -27,36 +27,11 @@ interface ModalProps {
   children: ReactNode;
 }
 
-// --- DADOS INICIAIS ATUALIZADOS ---
-const initialOwners: Owner[] = [
-  {
-    id: 1,
-    name: "João Silva",
-    cpf: "111.222.333-44",
-    email: "joao.silva@email.com",
-    phone: "(11) 98888-7777",
-    properties: [
-      { id: 101, title: "Apartamento Luxo no Centro" },
-      { id: 102, title: "Casa de Campo em Atibaia" },
-      { id: 103, title: "Sala Comercial na Paulista" },
-    ],
-  },
-  {
-    id: 2,
-    name: "Maria Oliveira",
-    cpf: "222.333.444-55",
-    email: "maria.oliveira@email.com",
-    phone: "(21) 97777-6666",
-    properties: [{ id: 201, title: "Casa com Piscina na Barra" }],
-  },
-];
-
 const emptyOwner: Owner = {
   id: null,
   name: "",
   cpf: "",
-  email: "",
-  phone: "",
+  contactPhone: "",
   properties: [], // Começa com uma lista vazia
 };
 
@@ -80,8 +55,8 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, title, children }) => {
 
 const ManageOwnersScreen: FC = () => {
   // --- ESTADOS (STATES) ---
-  const [owners, setOwners] = useState<Owner[]>(initialOwners);
-  const [filteredOwners, setFilteredOwners] = useState<Owner[]>(initialOwners);
+  const [owners, setOwners] = useState<Owner[]>([]);
+  const [filteredOwners, setFilteredOwners] = useState<Owner[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
@@ -90,6 +65,29 @@ const ManageOwnersScreen: FC = () => {
   const [selectedOwner, setSelectedOwner] = useState<Owner>(emptyOwner);
   const [newPropertyTitle, setNewPropertyTitle] = useState(""); // Novo estado para o título do imóvel a ser adicionado
 
+  // --- CARREGAR PROPRIETÁRIOS DA API ---
+  useEffect(() => {
+    const fetchOwners = async () => {
+      try {
+        const apiOwners = await OwnersService.getAll();
+        // Adaptar para o formato esperado pela tabela
+        const mappedOwners: Owner[] = apiOwners.map((o) => ({
+          id: o.ownerId,
+          name: o.name,
+          cpf: o.cpf || '',
+          contactPhone: o.contactPhone,
+          properties: [], // Por enquanto, propriedades vazias
+        }));
+        setOwners(mappedOwners);
+        setFilteredOwners(mappedOwners);
+      } catch (err) {
+        setOwners([]);
+        setFilteredOwners([]);
+      }
+    };
+    fetchOwners();
+  }, []);
+
   // --- EFEITO PARA FILTRAR ---
   useEffect(() => {
     const lowercasedTerm = searchTerm.toLowerCase();
@@ -97,7 +95,7 @@ const ManageOwnersScreen: FC = () => {
       (owner) =>
         owner.name.toLowerCase().includes(lowercasedTerm) ||
         owner.cpf.includes(lowercasedTerm) ||
-        owner.email.toLowerCase().includes(lowercasedTerm)
+        owner.contactPhone.toLowerCase().includes(lowercasedTerm)
     );
     setFilteredOwners(results);
   }, [searchTerm, owners]);
@@ -109,13 +107,30 @@ const ManageOwnersScreen: FC = () => {
   };
 
   // --- LÓGICA CRUD ---
-  const handleAddOwner = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddOwner = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setOwners([
-      ...owners,
-      { ...selectedOwner, id: Date.now(), properties: [] },
-    ]);
-    setAddModalOpen(false);
+    try {
+      await OwnersService.create({
+        name: selectedOwner.name,
+        contactPhone: selectedOwner.contactPhone,
+        cpf: selectedOwner.cpf,
+      });
+      
+      // Recarregar a lista de proprietários
+      const apiOwners = await OwnersService.getAll();
+      const mappedOwners: Owner[] = apiOwners.map((o) => ({
+        id: o.ownerId,
+        name: o.name,
+        cpf: o.cpf || '',
+        contactPhone: o.contactPhone,
+        properties: [],
+      }));
+      setOwners(mappedOwners);
+      setFilteredOwners(mappedOwners);
+      setAddModalOpen(false);
+    } catch (error) {
+      console.error('Erro ao adicionar proprietário:', error);
+    }
   };
 
   const openEditModal = (owner: Owner) => {
@@ -123,12 +138,32 @@ const ManageOwnersScreen: FC = () => {
     setEditModalOpen(true);
   };
 
-  const handleEditOwner = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEditOwner = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setOwners(
-      owners.map((o) => (o.id === selectedOwner.id ? selectedOwner : o))
-    );
-    setEditModalOpen(false);
+    if (!selectedOwner.id) return;
+    
+    try {
+      await OwnersService.update(selectedOwner.id, {
+        name: selectedOwner.name,
+        contactPhone: selectedOwner.contactPhone,
+        cpf: selectedOwner.cpf,
+      });
+      
+      // Recarregar a lista de proprietários
+      const apiOwners = await OwnersService.getAll();
+      const mappedOwners: Owner[] = apiOwners.map((o) => ({
+        id: o.ownerId,
+        name: o.name,
+        cpf: o.cpf || '',
+        contactPhone: o.contactPhone,
+        properties: [],
+      }));
+      setOwners(mappedOwners);
+      setFilteredOwners(mappedOwners);
+      setEditModalOpen(false);
+    } catch (error) {
+      console.error('Erro ao editar proprietário:', error);
+    }
   };
 
   const openDeleteModal = (owner: Owner) => {
@@ -136,9 +171,27 @@ const ManageOwnersScreen: FC = () => {
     setDeleteModalOpen(true);
   };
 
-  const handleDeleteOwner = () => {
-    setOwners(owners.filter((o) => o.id !== selectedOwner.id));
-    setDeleteModalOpen(false);
+  const handleDeleteOwner = async () => {
+    if (!selectedOwner.id) return;
+    
+    try {
+      await OwnersService.delete(selectedOwner.id);
+      
+      // Recarregar a lista de proprietários
+      const apiOwners = await OwnersService.getAll();
+      const mappedOwners: Owner[] = apiOwners.map((o) => ({
+        id: o.ownerId,
+        name: o.name,
+        cpf: o.cpf || '',
+        contactPhone: o.contactPhone,
+        properties: [],
+      }));
+      setOwners(mappedOwners);
+      setFilteredOwners(mappedOwners);
+      setDeleteModalOpen(false);
+    } catch (error) {
+      console.error('Erro ao deletar proprietário:', error);
+    }
   };
 
   // --- NOVAS FUNÇÕES PARA GERENCIAR IMÓVEIS ---
@@ -191,7 +244,7 @@ const ManageOwnersScreen: FC = () => {
                 type="text"
                 id="search"
                 className="search-input"
-                placeholder="Nome, CPF, email..."
+                placeholder="Nome, CPF, telefone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -207,7 +260,6 @@ const ManageOwnersScreen: FC = () => {
                 <tr>
                   <th>Nome Completo</th>
                   <th>CPF</th>
-                  <th>Email</th>
                   <th>Telefone</th>
                   <th>Qtd. Imóveis</th>
                   <th>Ações</th>
@@ -218,8 +270,7 @@ const ManageOwnersScreen: FC = () => {
                   <tr key={owner.id}>
                     <td data-label="Nome">{owner.name}</td>
                     <td data-label="CPF">{owner.cpf}</td>
-                    <td data-label="Email">{owner.email}</td>
-                    <td data-label="Telefone">{owner.phone}</td>
+                    <td data-label="Telefone">{owner.contactPhone}</td>
                     <td data-label="Qtd. Imóveis">{owner.properties.length}</td>
                     <td className="action-icons">
                       <button
@@ -285,16 +336,8 @@ const ManageOwnersScreen: FC = () => {
             required
           />
           <input
-            name="email"
-            type="email"
-            value={selectedOwner.email}
-            onChange={handleInputChange}
-            placeholder="Email"
-            required
-          />
-          <input
-            name="phone"
-            value={selectedOwner.phone}
+            name="contactPhone"
+            value={selectedOwner.contactPhone}
             onChange={handleInputChange}
             placeholder="Telefone"
             required
