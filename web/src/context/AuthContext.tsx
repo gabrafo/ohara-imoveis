@@ -14,8 +14,8 @@ interface User {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
-  register: (data: RegisterRequest) => Promise<void>; 
+  login: (email: string, password: string) => Promise<User>;
+  register: (data: RegisterRequest) => Promise<User>; 
   logout: () => Promise<void>;
 }
 
@@ -33,7 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const loadUser = async () => {
       if (AuthService.isAuthenticated()) {
         try {
-          const userData = await AuthService.getProfile();
+          const userData = await AuthService.getProfile() as User;
           setUser(userData);
         } catch (error) {
           console.error('Erro ao carregar usuário:', error);
@@ -46,20 +46,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     loadUser();
   }, []);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<User> => {
     setLoading(true);
     await AuthService.login({ email, password });
-    const userData = await AuthService.getProfile();
+    const userData = await AuthService.getProfile() as User;
     setUser(userData);
     setLoading(false);
+    return userData;
   };
 
-  const register = async (data: any) => {
+  const register = async (data: any): Promise<User> => {
     setLoading(true);
     await AuthService.register(data);
-    const userData = await AuthService.getProfile();
+    const userData = await AuthService.getProfile() as User;
     setUser(userData);
     setLoading(false);
+    return userData;
   };
 
   const logout = async () => {

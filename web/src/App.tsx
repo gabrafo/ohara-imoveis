@@ -43,8 +43,8 @@ function App() {
       <Router>
         <div>
           <Routes>
-            {/* Rota padrão redireciona para home */}
-            <Route path="/" element={<Navigate to="/home" replace />} />
+            {/* Rota padrão redireciona para login */}
+            <Route path="/" element={<Navigate to="/login" replace />} />
 
             {/* Rotas Públicas */}
             <Route path="/login" element={<LoginScreen />} />
@@ -71,7 +71,7 @@ function App() {
             />
 
             {/* Rota Fallback */}
-            <Route path="*" element={<Navigate to="/home" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </div>
       </Router>

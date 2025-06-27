@@ -18,8 +18,8 @@ const LoginScreen: React.FC = () => {
     setError('');
     
     try {
-      await login(email, password);
-      if (user?.role === 'ADMIN') {
+      const userData = await login(email, password);
+      if (userData.role === 'ADMIN') {
         navigate('/admin/menu');
       } else {
         navigate('/home');

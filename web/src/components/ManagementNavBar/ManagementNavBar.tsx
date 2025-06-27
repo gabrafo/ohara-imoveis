@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 import { motion, easeOut } from "framer-motion";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react"; // Ícones para o menu móvel
 import Logo02 from "../../assets/logo02.svg";
 import "./ManagementNavBar.css";
+import { useAuth } from "../../context/AuthContext";
 
 const ManagementNavBar: React.FC = () => {
   // Estado para controlar a abertura/fechamento do menu em dispositivos móveis
   const [isMenuOpen, setMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   // Função para alternar o estado do menu
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login");
   };
 
   return (
@@ -45,6 +53,14 @@ const ManagementNavBar: React.FC = () => {
           <NavLink to="/admin/proprietarios" onClick={toggleMenu}>
             Proprietarios
           </NavLink>
+          {user && (
+            <button
+              className="mgmt-logout-btn"
+              onClick={handleLogout}
+            >
+              Sair
+            </button>
+          )}
         </nav>
 
         {/* Botão do menu hambúrguer que só aparece em telas menores */}
