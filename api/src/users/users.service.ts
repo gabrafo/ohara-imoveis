@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/users.entity';
 import { RegisterRequestDto } from 'src/auth/dto/request/register.request.dto';
 import { UpdateUserDto } from './dto/request/update-user.request.dto';
+import { Role } from '../common/enums/role.enum';
 
 @Injectable()
 export class UsersService {
@@ -55,7 +56,13 @@ export class UsersService {
   }
 
   async create(user: RegisterRequestDto): Promise<User> {
-    const newUser = this.userRepository.create(user);
+    // Se o email terminar com @ohara.com, define como ADMIN
+    const role = user.email.endsWith('@ohara.com') ? Role.ADMIN : Role.CUSTOMER;
+    
+    const newUser = this.userRepository.create({
+      ...user,
+      role
+    });
     return this.userRepository.save(newUser);
   }
 
