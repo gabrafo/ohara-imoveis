@@ -2,15 +2,16 @@ import { useState, useEffect } from "react";
 import { Pencil, Trash2, X } from "lucide-react";
 import ManagementNavBar from "../../components/ManagementNavBar/ManagementNavBar";
 import "./ManageClientesScreen.css";
+import ClientsService from '../../services/clients.service';
 
 // --- TIPOS ---
 interface Client {
   id: number | null;
-  firstName: string;
-  lastName: string;
+  name: string;
   cpf: string;
   email: string;
   phone: string;
+  password: string;
 }
 
 interface ModalProps {
@@ -19,59 +20,6 @@ interface ModalProps {
   title: string;
   children: React.ReactNode;
 }
-
-// --- DADOS INICIAIS ---
-const initialClients: Client[] = [
-  {
-    id: 1,
-    firstName: "João",
-    lastName: "Silva",
-    cpf: "120.945.789-31",
-    email: "joao.silva@hotmail.com",
-    phone: "(12) 93456-7890",
-  },
-  {
-    id: 2,
-    firstName: "Maria",
-    lastName: "Oliveira",
-    cpf: "234.567.890-12",
-    email: "maria.o@gmail.com",
-    phone: "(11) 98765-4321",
-  },
-  {
-    id: 3,
-    firstName: "Carlos",
-    lastName: "Pereira",
-    cpf: "345.678.901-23",
-    email: "carlos.pereira@yahoo.com",
-    phone: "(21) 99887-7665",
-  },
-  {
-    id: 4,
-    firstName: "Ana",
-    lastName: "Souza",
-    cpf: "456.789.012-34",
-    email: "ana.souza@outlook.com",
-    phone: "(31) 98877-6655",
-  },
-  {
-    id: 5,
-    firstName: "Pedro",
-    lastName: "Martins",
-    cpf: "567.890.123-45",
-    email: "pedro.martins@email.com",
-    phone: "(41) 97766-5544",
-  },
-];
-
-const emptyClient: Client = {
-  id: null,
-  firstName: "",
-  lastName: "",
-  cpf: "",
-  email: "",
-  phone: "",
-};
 
 // --- COMPONENTE MODAL GENÉRICO ---
 const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
@@ -93,23 +41,55 @@ const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
 };
 
 const ManageClientsScreen = () => {
-  const [clients, setClients] = useState<Client[]>(initialClients);
-  const [filteredClients, setFilteredClients] =
-    useState<Client[]>(initialClients);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [filteredClients, setFilteredClients] = useState<Client[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const [isAddModalOpen, setAddModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
 
-  const [selectedClient, setSelectedClient] = useState<Client>(emptyClient);
+  const [selectedClient, setSelectedClient] = useState<Client>({
+    id: null,
+    name: "",
+    cpf: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
+  useEffect(() => {
+    // Carregar clientes da API ao montar
+    const fetchClients = async () => {
+      try {
+        const apiClients = await ClientsService.getAll();
+        // Adaptar para o formato esperado pela tabela
+        const mappedClients: Client[] = apiClients.map((c) => {
+          const [firstName, ...rest] = c.name.split(' ');
+          return {
+            id: c.userId,
+            name: c.name,
+            cpf: c.cpf || '',
+            email: c.email,
+            phone: c.phone,
+            password: '', // Senha não é retornada pela API de listagem
+          };
+        });
+        setClients(mappedClients);
+        setFilteredClients(mappedClients);
+      } catch (err) {
+        setClients([]);
+        setFilteredClients([]);
+      }
+    };
+    fetchClients();
+  }, []);
 
   useEffect(() => {
     const lowercasedTerm = searchTerm.toLowerCase();
     const results = clients.filter(
       (client) =>
-        client.firstName.toLowerCase().includes(lowercasedTerm) ||
-        client.lastName.toLowerCase().includes(lowercasedTerm) ||
+        client.name.toLowerCase().includes(lowercasedTerm) ||
         client.email.toLowerCase().includes(lowercasedTerm) ||
         client.cpf.includes(searchTerm)
     );
@@ -125,10 +105,39 @@ const ManageClientsScreen = () => {
     setClientData({ ...clientData, [name]: value });
   };
 
-  const handleAddClient = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddClient = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setClients([...clients, { ...selectedClient, id: Date.now() }]);
-    setAddModalOpen(false);
+    try {
+      const createData = {
+        name: selectedClient.name,
+        email: selectedClient.email,
+        password: selectedClient.password,
+        phone: selectedClient.phone,
+        birthDate: '01-01-1990', // Data padrão
+        role: 'customer', // Role obrigatório
+      };
+      
+      await ClientsService.create(createData);
+      
+      // Recarregar a lista de clientes
+      const apiClients = await ClientsService.getAll();
+      const mappedClients: Client[] = apiClients.map((c) => {
+        const [firstName, ...rest] = c.name.split(' ');
+        return {
+          id: c.userId,
+          name: c.name,
+          cpf: c.cpf || '',
+          email: c.email,
+          phone: c.phone,
+          password: '', // Senha não é retornada pela API de listagem
+        };
+      });
+      setClients(mappedClients);
+      setFilteredClients(mappedClients);
+      setAddModalOpen(false);
+    } catch (error) {
+      console.error('Erro ao adicionar cliente:', error);
+    }
   };
 
   const openEditModal = (client: Client) => {
@@ -136,14 +145,43 @@ const ManageClientsScreen = () => {
     setEditModalOpen(true);
   };
 
-  const handleEditClient = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleEditClient = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setClients(
-      clients.map((client) =>
-        client.id === selectedClient.id ? selectedClient : client
-      )
-    );
-    setEditModalOpen(false);
+    if (!selectedClient.id) return;
+    
+    try {
+      // Testar com apenas o nome primeiro
+      const updateData: any = {
+        name: selectedClient.name,
+      };
+      
+      console.log('Editando cliente ID:', selectedClient.id);
+      console.log('Dados sendo enviados:', updateData);
+      
+      await ClientsService.update(selectedClient.id, updateData);
+      
+      console.log('Cliente atualizado com sucesso');
+      
+      // Recarregar a lista de clientes
+      const apiClients = await ClientsService.getAll();
+      const mappedClients: Client[] = apiClients.map((c) => {
+        return {
+          id: c.userId,
+          name: c.name,
+          cpf: c.cpf || '',
+          email: c.email,
+          phone: c.phone,
+          password: '', // Senha não é retornada pela API de listagem
+        };
+      });
+      setClients(mappedClients);
+      setFilteredClients(mappedClients);
+      setEditModalOpen(false);
+    } catch (error) {
+      console.error('Erro ao editar cliente:', error);
+      console.error('Detalhes do erro:', (error as any).response?.data);
+      console.error('Status do erro:', (error as any).response?.status);
+    }
   };
 
   const openDeleteModal = (client: Client) => {
@@ -151,9 +189,31 @@ const ManageClientsScreen = () => {
     setDeleteModalOpen(true);
   };
 
-  const handleDeleteClient = () => {
-    setClients(clients.filter((client) => client.id !== selectedClient.id));
-    setDeleteModalOpen(false);
+  const handleDeleteClient = async () => {
+    if (!selectedClient.id) return;
+    
+    try {
+      await ClientsService.delete(selectedClient.id);
+      
+      // Recarregar a lista de clientes
+      const apiClients = await ClientsService.getAll();
+      const mappedClients: Client[] = apiClients.map((c) => {
+        const [firstName, ...rest] = c.name.split(' ');
+        return {
+          id: c.userId,
+          name: c.name,
+          cpf: c.cpf || '',
+          email: c.email,
+          phone: c.phone,
+          password: '', // Senha não é retornada pela API de listagem
+        };
+      });
+      setClients(mappedClients);
+      setFilteredClients(mappedClients);
+      setDeleteModalOpen(false);
+    } catch (error) {
+      console.error('Erro ao deletar cliente:', error);
+    }
   };
 
   return (
@@ -166,7 +226,14 @@ const ManageClientsScreen = () => {
             <button
               className="action-btn add-btn"
               onClick={() => {
-                setSelectedClient(emptyClient);
+                setSelectedClient({
+                  id: null,
+                  name: "",
+                  cpf: "",
+                  email: "",
+                  phone: "",
+                  password: "",
+                });
                 setAddModalOpen(true);
               }}
             >
@@ -193,7 +260,6 @@ const ManageClientsScreen = () => {
               <thead>
                 <tr>
                   <th>Nome</th>
-                  <th>Último Nome</th>
                   <th>CPF</th>
                   <th>Email</th>
                   <th>Celular</th>
@@ -203,8 +269,7 @@ const ManageClientsScreen = () => {
               <tbody>
                 {filteredClients.map((client) => (
                   <tr key={client.id}>
-                    <td>{client.firstName}</td>
-                    <td>{client.lastName}</td>
+                    <td>{client.name}</td>
                     <td>{client.cpf}</td>
                     <td>{client.email}</td>
                     <td>{client.phone}</td>
@@ -240,30 +305,12 @@ const ManageClientsScreen = () => {
       >
         <form onSubmit={handleAddClient} className="modal-form">
           <input
-            name="firstName"
-            value={selectedClient.firstName}
+            name="name"
+            value={selectedClient.name}
             onChange={(e) =>
               handleInputChange(e, selectedClient, setSelectedClient)
             }
             placeholder="Nome"
-            required
-          />
-          <input
-            name="lastName"
-            value={selectedClient.lastName}
-            onChange={(e) =>
-              handleInputChange(e, selectedClient, setSelectedClient)
-            }
-            placeholder="Último Nome"
-            required
-          />
-          <input
-            name="cpf"
-            value={selectedClient.cpf}
-            onChange={(e) =>
-              handleInputChange(e, selectedClient, setSelectedClient)
-            }
-            placeholder="CPF"
             required
           />
           <input
@@ -274,6 +321,16 @@ const ManageClientsScreen = () => {
               handleInputChange(e, selectedClient, setSelectedClient)
             }
             placeholder="Email"
+            required
+          />
+          <input
+            name="password"
+            type="password"
+            value={selectedClient.password}
+            onChange={(e) =>
+              handleInputChange(e, selectedClient, setSelectedClient)
+            }
+            placeholder="Senha"
             required
           />
           <input
@@ -307,30 +364,12 @@ const ManageClientsScreen = () => {
       >
         <form onSubmit={handleEditClient} className="modal-form">
           <input
-            name="firstName"
-            value={selectedClient.firstName}
+            name="name"
+            value={selectedClient.name}
             onChange={(e) =>
               handleInputChange(e, selectedClient, setSelectedClient)
             }
             placeholder="Nome"
-            required
-          />
-          <input
-            name="lastName"
-            value={selectedClient.lastName}
-            onChange={(e) =>
-              handleInputChange(e, selectedClient, setSelectedClient)
-            }
-            placeholder="Último Nome"
-            required
-          />
-          <input
-            name="cpf"
-            value={selectedClient.cpf}
-            onChange={(e) =>
-              handleInputChange(e, selectedClient, setSelectedClient)
-            }
-            placeholder="CPF"
             required
           />
           <input
@@ -342,6 +381,15 @@ const ManageClientsScreen = () => {
             }
             placeholder="Email"
             required
+          />
+          <input
+            name="password"
+            type="password"
+            value={selectedClient.password}
+            onChange={(e) =>
+              handleInputChange(e, selectedClient, setSelectedClient)
+            }
+            placeholder="Nova senha (deixe em branco para manter a atual)"
           />
           <input
             name="phone"
@@ -375,7 +423,7 @@ const ManageClientsScreen = () => {
         <p>
           Tem certeza que deseja excluir o cliente{" "}
           <strong>
-            {selectedClient?.firstName} {selectedClient?.lastName}
+            {selectedClient?.name}
           </strong>
           ?
         </p>
