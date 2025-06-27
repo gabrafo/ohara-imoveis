@@ -85,7 +85,7 @@ const ManagementMenuScreen: React.FC = () => {
                 </p>
               </motion.div>
             </Link>
-            <Link to="/admin/proprietario" className="mgmt-card-link">
+            <Link to="/admin/proprietarios" className="mgmt-card-link">
               <motion.div
                 className="mgmt-card"
                 variants={cardVariants}
