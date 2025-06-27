@@ -12,7 +12,7 @@ const RegisterScreen: React.FC = () => {
   const [birthDate, setBirthDate] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   
-  const { register } = useAuth();
+  const { register, user } = useAuth();
   const navigate = useNavigate();
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,9 +93,22 @@ const RegisterScreen: React.FC = () => {
         birthDate
       });
       
-      navigate("/home");
+      if (user?.role === 'ADMIN') {
+        navigate('/admin/menu');
+      } else {
+        navigate('/home');
+      }
     } catch (err: any) {
       console.error("Erro ao registrar:", err);
+
+      // Erro de rede/CORS - não há response
+      if (!err.response) {
+        setErrors(prev => ({ 
+          ...prev, 
+          general: "Erro de conexão. Verifique se o backend está rodando e acessível." 
+        }));
+        return;
+      }
 
       if (err.response?.status === 409) {
         if (err.response.data.message.includes("e-mail")) {

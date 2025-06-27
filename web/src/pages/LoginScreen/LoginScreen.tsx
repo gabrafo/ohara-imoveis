@@ -8,7 +8,7 @@ const LoginScreen: React.FC = () => {
   // Estados para controlar os valores dos inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -19,7 +19,11 @@ const LoginScreen: React.FC = () => {
     
     try {
       await login(email, password);
-      navigate('/home');
+      if (user?.role === 'ADMIN') {
+        navigate('/admin/menu');
+      } else {
+        navigate('/home');
+      }
     } catch (err) {
       setError('Credenciais inválidas. Verifique seu email e senha.');
       console.error('Erro ao fazer login:', err);

@@ -6,6 +6,8 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 // Importação de contexto
 import { AuthProvider } from "./context/AuthContext";
@@ -23,6 +25,17 @@ import ManageVisitsScreen from "./pages/ManageVisitsScreen/ManageVisitsScreen";
 import ManageOwnersScreen from "./pages/ManageOwnersScreen/ManageOwnersScreen";
 // --- NOVA IMPORTAÇÃO ---
 import MyVisitsScreen from "./pages/MyVisitsScreen/MyVisitsScreen";
+
+function RequireAdmin({ children }: { children: React.ReactElement }) {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  if (loading) return null; // ou um spinner
+  if (!user || user.role !== 'ADMIN') {
+    return <Navigate to="/home" replace />;
+  }
+  return children;
+}
 
 function App() {
   return (
@@ -48,13 +61,13 @@ function App() {
             <Route path="/minhas-visitas" element={<MyVisitsScreen />} />
 
             {/* Rotas de Administração */}
-            <Route path="/admin/menu" element={<ManagementMenuScreen />} />
-            <Route path="/admin/clientes" element={<ManageClientsScreen />} />
-            <Route path="/admin/imoveis" element={<ManagePropertiesScreen />} />
-            <Route path="/admin/visitas" element={<ManageVisitsScreen />} />
+            <Route path="/admin/menu" element={<RequireAdmin><ManagementMenuScreen /></RequireAdmin>} />
+            <Route path="/admin/clientes" element={<RequireAdmin><ManageClientsScreen /></RequireAdmin>} />
+            <Route path="/admin/imoveis" element={<RequireAdmin><ManagePropertiesScreen /></RequireAdmin>} />
+            <Route path="/admin/visitas" element={<RequireAdmin><ManageVisitsScreen /></RequireAdmin>} />
             <Route
               path="/admin/proprietarios"
-              element={<ManageOwnersScreen />}
+              element={<RequireAdmin><ManageOwnersScreen /></RequireAdmin>}
             />
 
             {/* Rota Fallback */}
