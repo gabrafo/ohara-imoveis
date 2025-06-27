@@ -92,12 +92,8 @@ const RegisterScreen: React.FC = () => {
         phone,
         birthDate
       });
-      
-      if (user?.role === 'ADMIN') {
-        navigate('/admin/menu');
-      } else {
-        navigate('/home');
-      }
+      // Após cadastro, redireciona para a tela de login
+      navigate('/login');
     } catch (err: any) {
       console.error("Erro ao registrar:", err);
 
