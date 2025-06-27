@@ -46,9 +46,19 @@ const NavBar: React.FC<NavBarProps> = ({ activeLink }) => {
             Buscar Imóveis
           </Link>
           {user ? (
-            <button className="navbar-link-btn" onClick={handleLogout} style={{ background: 'none', border: 'none', color: 'inherit', cursor: 'pointer', font: 'inherit', padding: 0 }}>
-              Sair
-            </button>
+            <>
+              {user.role === 'CUSTOMER' && (
+                <Link
+                  to="/minhas-visitas"
+                  className={activeLink === "minhas-visitas" ? "active" : ""}
+                >
+                  Minhas Visitas
+                </Link>
+              )}
+              <button className="navbar-logout-btn" onClick={handleLogout}>
+                Sair
+              </button>
+            </>
           ) : (
             <Link to="/login" className={activeLink === "login" ? "active" : ""}>
               Entrar
