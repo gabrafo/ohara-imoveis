@@ -150,13 +150,21 @@ const ManageClientsScreen = () => {
     if (!selectedClient.id) return;
     
     try {
-      // Testar com apenas o nome primeiro
       const updateData: any = {
         name: selectedClient.name,
+        email: selectedClient.email,
+        phone: selectedClient.phone,
+        birthDate: '01-01-1990', // Data padrão conforme a API
       };
+      
+      // Incluir senha apenas se foi fornecida
+      if (selectedClient.password.trim()) {
+        updateData.password = selectedClient.password;
+      }
       
       console.log('Editando cliente ID:', selectedClient.id);
       console.log('Dados sendo enviados:', updateData);
+      console.log('Token de acesso:', localStorage.getItem('accessToken'));
       
       await ClientsService.update(selectedClient.id, updateData);
       
@@ -181,6 +189,7 @@ const ManageClientsScreen = () => {
       console.error('Erro ao editar cliente:', error);
       console.error('Detalhes do erro:', (error as any).response?.data);
       console.error('Status do erro:', (error as any).response?.status);
+      console.error('Headers da resposta:', (error as any).response?.headers);
     }
   };
 

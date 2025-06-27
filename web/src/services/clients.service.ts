@@ -38,7 +38,7 @@ const ClientsService = {
     return res.data;
   },
   async update(id: number, data: UpdateClientDto): Promise<Client> {
-    const res = await api.put<Client>(`/users/${id}`, data);
+    const res = await api.patch<Client>(`/users/${id}`, data);
     return res.data;
   },
   async delete(id: number): Promise<void> {
