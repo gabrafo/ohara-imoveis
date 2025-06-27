@@ -65,6 +65,39 @@ A seleção da stack tecnológica para este projeto visa o uso de ferramentas mo
 * **Organização e Gerenciamento de Projeto:**
     * **GitHub:** Plataforma para hospedagem do código-fonte, controle de versão distribuído com Git, gerenciamento de issues para rastreamento de tarefas e bugs, e para a documentação de releases do projeto.
 
+## 4. Padrões de Commits - Conventional Commits
+
+Para garantir um trabalho colaborativo eficiente e uma documentação clara, adotamos a convenção [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/), que define uma estrutura padronizada para as mensagens de commit, facilitando a leitura do histórico, a geração automática de changelogs e o entendimento das mudanças no projeto.
+
+**Formato básico:**
+```
+<tipo>(escopo opcional): descrição breve da mudança
+```
+
+**Tipos mais comuns:**
+
+| Tipo        | Descrição                                                       |
+|-------------|-----------------------------------------------------------------|
+| `feat`      | Adição de uma nova funcionalidade                              |
+| `fix`       | Correção de bug                                                 |
+| `docs`      | Alterações na documentação (README, comentários, etc.)         |
+| `style`     | Formatação de código (sem alteração de lógica)                 |
+| `refactor`  | Refatoração de código (sem adicionar funcionalidade ou corrigir bugs) |
+| `test`      | Adição ou alteração de testes                                   |
+| `chore`     | Atualizações de tarefas auxiliares (ex: configs, scripts, deps) |
+| `ci`        | Alterações nos scripts de integração contínua                  |
+| `build`     | Mudanças que afetam o processo de build ou dependências         |
+| `revert`    | Reversão de um commit anterior                                 |
+
+**Exemplos de commit:**
+```
+feat: adiciona formulário de login
+fix: corrige validação de e-mail no endpoint de cadastro
+docs: atualiza instruções de instalação no README
+refactor: reorganiza serviços de autenticação
+```
+
+
 **Nota:** A stack tecnológica aqui descrita representa a escolha inicial para o projeto. Eventuais adições ou substituições de ferramentas ou bibliotecas (por exemplo, para testes de integração, observabilidade, análise estática de código, ou outras necessidades específicas) serão avaliadas e, se incorporadas, devidamente registradas e justificadas nesta seção.
 ---
 
