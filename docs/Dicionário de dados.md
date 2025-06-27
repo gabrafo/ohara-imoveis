@@ -20,7 +20,7 @@ Armazena informações sobre os proprietários dos imóveis.
 | ownerId | Integer | Sim | Auto incremento | Chave Primária | Identificador único do proprietário |
 | name | Varchar | Sim | - | - | Nome completo do proprietário |
 | contactPhone | Varchar | Sim | - | - | Número de telefone de contato |
-| cpf | Varchar | Não | - | - | CPF do proprietário (opcional) |
+| cpf | Varchar | Não | - | Único | CPF do proprietário (opcional) |
 
 ## Tabela: property
 
@@ -33,7 +33,7 @@ Armazena informações sobre os imóveis disponíveis.
 | status | Enum | Sim | 'AVAILABLE' | - | Status do imóvel (AVAILABLE, UNAVAILABLE, PENDING, CONCLUDED) |
 | offerType | Enum | Sim | - | - | Tipo de oferta (FOR_RENTAL, FOR_SALE, FOR_COMMERCIAL_RENT) |
 | area | Numeric | Sim | - | - | Área total do imóvel em metros quadrados |
-| registrationDate | Timestamp | Sim | - | - | Data de registro do imóvel no sistema |
+| registrationDate | Date | Sim | now() | - | Data de registro do imóvel no sistema |
 | ownerId | Integer | Não | - | Chave Estrangeira | Referência ao proprietário do imóvel |
 | addressZipcode | Varchar | Sim | - | - | CEP do endereço do imóvel |
 | addressNeighborhood | Varchar | Sim | - | - | Bairro do imóvel |
@@ -52,8 +52,22 @@ Relaciona imóveis com suas características específicas.
 | propertyFeatureId | Integer | Sim | Auto incremento | Chave Primária | Identificador único da característica do imóvel |
 | quantity | Integer | Não | - | - | Quantidade da característica (ex: número de quartos) |
 | details | Varchar | Não | - | - | Detalhes adicionais sobre a característica |
-| propertyPropertyId | Integer | Não | - | Chave Estrangeira | Referência ao imóvel |
+| propertyId | Integer | Não | - | Chave Estrangeira | Referência ao imóvel |
 | featureTypeId | Integer | Não | - | Chave Estrangeira | Referência ao tipo de característica |
+
+## Tabela: property_image
+
+Armazena imagens associadas aos imóveis.
+
+| Coluna | Tipo | Obrigatório | Valor Padrão | Restrição | Descrição |
+|--------|------|-------------|--------------|-----------|-----------|
+| imageId | Integer | Sim | Auto incremento | Chave Primária | Identificador único da imagem |
+| filename | Varchar | Sim | - | - | Nome do arquivo da imagem |
+| path | Varchar | Sim | - | - | Caminho do arquivo no sistema |
+| isMain | Boolean | Sim | false | - | Indica se é a imagem principal do imóvel |
+| description | Varchar | Não | - | - | Descrição da imagem |
+| uploadedAt | Timestamp | Sim | now() | - | Data e hora do upload da imagem |
+| propertyId | Integer | Não | - | Chave Estrangeira | Referência ao imóvel associado |
 
 ## Tabela: user
 
@@ -78,9 +92,10 @@ Armazena informações sobre visitas agendadas aos imóveis.
 |--------|------|-------------|--------------|-----------|-----------|
 | visitId | Integer | Sim | Auto incremento | Chave Primária | Identificador único da visita |
 | visitDateTime | Timestamp | Sim | - | - | Data e hora agendada para a visita |
-| visitStatus | Enum | Sim | 'SCHEDULED' | - | Status da visita (SCHEDULED, CANCELED, DONE) |
-| propertyPropertyId | Integer | Não | - | Chave Estrangeira | Referência ao imóvel a ser visitado |
-| userId | Integer | Não | - | Chave Estrangeira | Referência ao usuário que agendou a visita |
+| visitStatus | Enum | Sim | 'WAITING_CONFIRMATION' | - | Status da visita (WAITING_CONFIRMATION, SCHEDULED, CANCELED, DONE) |
+| customerId | Integer | Não | - | Chave Estrangeira | Referência ao usuário cliente que agendou a visita |
+| brokerId | Integer | Não | - | Chave Estrangeira | Referência ao corretor responsável pela visita |
+| propertyId | Integer | Não | - | Chave Estrangeira | Referência ao imóvel a ser visitado |
 
 ## Legenda
 
