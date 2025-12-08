@@ -97,8 +97,8 @@ docs: atualiza instruções de instalação no README
 refactor: reorganiza serviços de autenticação
 ```
 
-
 **Nota:** A stack tecnológica aqui descrita representa a escolha inicial para o projeto. Eventuais adições ou substituições de ferramentas ou bibliotecas (por exemplo, para testes de integração, observabilidade, análise estática de código, ou outras necessidades específicas) serão avaliadas e, se incorporadas, devidamente registradas e justificadas nesta seção.
+
 ---
 
 Este README será um documento vivo e evoluirá junto com o projeto.
