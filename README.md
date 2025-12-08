@@ -102,3 +102,136 @@ refactor: reorganiza serviços de autenticação
 ---
 
 Este README será um documento vivo e evoluirá junto com o projeto.
+
+---
+
+# Ohara Imóveis Project
+
+## 1. Introduction
+
+This repository documents and stores the artifacts of the **Ohara Imóveis** project, developed as a partial requirement for the **Software Engineering** course of the **Information Systems** program at the **Federal University of Lavras (UFLA)**.
+
+The project covers the practical application of software engineering concepts and methodologies—from requirements analysis and design to implementation, testing, and documentation of a functional software solution.
+
+> **Note:**
+> All project documentation is written in **Brazilian Portuguese (pt-BR)**, **except for this README**, which is provided in English for broader accessibility.
+
+This `README.md` serves as the main reference point for the project, detailing its organizational structure, technologies used, development plan, and adopted standards. It will be continuously updated throughout the project’s lifecycle.
+
+---
+
+## 2. Folder Structure
+
+The project is organized to promote clarity and modularity, separating backend, frontend, and documentation responsibilities:
+
+* **`/` (Project Root):**
+
+  * `README.md`: This document.
+  * `.gitignore`: Defines files and folders ignored by Git.
+  * **`/api`**: Backend source code and configuration (NestJS).
+  * **`/web`**: Frontend source code and configuration (ReactJS + Vite).
+  * **`/requisitos`**: Requirements engineering documentation, including:
+
+    * Functional and Non-Functional Requirements
+    * Use Case Diagrams (UML + exported images)
+    * Textual Use Case Scenarios
+  * **`/docs`**: Software design and architecture documentation:
+
+    * Domain Class Diagram
+    * Package Diagram
+    * Sequence Diagrams
+    * Deployment Diagram
+    * Other relevant artifacts
+  * **`/prototipos`**: Interface design prototypes:
+
+    * Figma source files
+    * Exported screens and wireframes
+    * Prototype links
+  * **`/testes`**: Test plans and validation evidence:
+
+    * Black-box test cases
+    * Automated testing scripts (e.g., Selenium)
+  * **`/padroes-adotados`**: Standards and guidelines used throughout the workflow:
+
+    * Requirements writing standards
+    * Project conventions and rules
+
+Additional folders may be included as needed.
+Both `/api` and `/web` will include `docker-compose.yml` and `Dockerfile` to support execution with Docker.
+
+---
+
+## 3. Technologies Used
+
+The selected stack prioritizes modern, productive, and industry-relevant tools:
+
+### **Frontend (`/web`)**
+
+* **HTML/CSS**
+* **ReactJS (v19.1.0)**
+* **TypeScript (v5.8.3)**
+* **Vite (v6.3.5)**
+
+### **Backend (`/api`)**
+
+* **NestJS (v11.1.3)**
+* **TypeScript (v5.8.3)**
+* **TypeORM (v0.3.24)**
+* **Swagger / OpenAPI (v11.2.0)**
+* **PostgreSQL (v15)**
+
+### **Testing**
+
+* **Jest (v29.5.0)** for unit tests in both backend and frontend.
+
+### **Containerization**
+
+* **Docker** for environment standardization and easier deployment.
+
+### **Prototyping**
+
+* **Figma** for UI/UX design.
+
+### **Project Management**
+
+* **GitHub** for version control, project tracking, and documentation.
+
+---
+
+## 4. Commit Standards — Conventional Commits
+
+We adopt the **Conventional Commits** standard to ensure clarity and consistency in version history.
+
+**Format:**
+
+```
+<type>(optional scope): brief description
+```
+
+### **Common Types**
+
+| Type       | Meaning                                     |
+| ---------- | ------------------------------------------- |
+| `feat`     | Introduces a new feature                    |
+| `fix`      | Fixes a bug                                 |
+| `docs`     | Documentation updates                       |
+| `style`    | Formatting changes without logic            |
+| `refactor` | Code restructuring without behavior changes |
+| `test`     | Adds or updates tests                       |
+| `chore`    | Maintenance tasks (configs, scripts, etc.)  |
+| `ci`       | CI/CD configuration changes                 |
+| `build`    | Changes to build system or dependencies     |
+| `revert`   | Reverts a previous commit                   |
+
+### **Examples**
+
+```
+feat: add login form
+fix: correct date parsing in reservation service
+docs: update installation instructions
+refactor: split booking controller into smaller modules
+```
+
+---
+
+This README is a living document and will continue to evolve as the project progresses.
